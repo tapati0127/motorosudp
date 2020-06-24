@@ -1,0 +1,4 @@
+<launch>
+   <include file="$(find motoman_motomini_moveit_config)/launch/demo.launch" />
+   <node name="motorosudp" pkg="motorosudp" type="motorosudp" output="screen"/>
+</launch>
