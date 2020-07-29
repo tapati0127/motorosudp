@@ -41,13 +41,14 @@ namespace motorosudp {
 class QNode : public QThread {
     Q_OBJECT
 public:
+  geometry_msgs::Pose pose;
 	QNode(int argc, char** argv );
 	virtual ~QNode();
 	bool init();
   void publishJoint(std::vector<double> joints);
   void publishMarker(std::vector<double> joints);
   void deleteMarker();
-
+  std::vector<double> getROSPosition(std::vector<double> joints);
 
 Q_SIGNALS:
   void rosShutdown();

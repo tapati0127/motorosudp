@@ -279,12 +279,32 @@
      </property>
      <item>
       <property name="text">
+       <string>192.168.1.11</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>192.168.1.12</string>
       </property>
      </item>
      <item>
       <property name="text">
+       <string>192.168.1.13</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>192.168.1.14</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>192.168.1.15</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>192.168.1.16</string>
       </property>
      </item>
     </widget>
@@ -603,7 +623,7 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>GOAL POSITION</string>
+      <string>GET POSITION</string>
      </property>
     </widget>
     <widget class="QTextEdit" name="textEdit1">

@@ -70,15 +70,15 @@ bool QNode::init() {
   marker.header.stamp = ros::Time();
 
   marker.type = visualization_msgs::Marker::SPHERE;
-  marker.action = visualization_msgs::Marker::ADD;
+
 
   marker.pose.orientation.x = 0.0;
   marker.pose.orientation.y = 0.0;
   marker.pose.orientation.z = 0.0;
   marker.pose.orientation.w = 1.0;
-  marker.scale.x = 0.001;
-  marker.scale.y = 0.001;
-  marker.scale.z = 0.001;
+  marker.scale.x = 0.005;
+  marker.scale.y = 0.005;
+  marker.scale.z = 0.005;
   marker.color.a = 1.0; // Don't forget to set the alpha!
   marker.color.r = 0.0;
   marker.color.g = 1.0;
@@ -106,15 +106,15 @@ void QNode::publishJoint(std::vector<double> joints) {
 void QNode::publishMarker(std::vector<double> joints)
 {
   motomini_state_ptr->setJointGroupPositions ("motomini_arm", joints);
-  geometry_msgs::Pose pose;
   tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("tool0"),pose);
   marker.id += 1;
   marker.pose.position.x = pose.position.x;
   marker.pose.position.y = pose.position.y;
   marker.pose.position.z = pose.position.z;
+  marker.action = visualization_msgs::Marker::ADD;
   marker_publisher.publish(marker);
-  ROS_INFO("Publisher marker:");
-  std::cout << pose.position.x << " " << pose.position.y << " " << pose.position.z << std::endl;
+  //ROS_INFO("Publisher marker:");
+  //std::cout << pose.position.x << " " << pose.position.y << " " << pose.position.z << std::endl;
 }
 
 void QNode::deleteMarker()
@@ -124,5 +124,25 @@ void QNode::deleteMarker()
   marker_publisher.publish(marker);
   ROS_INFO("Deleted all marker!!!");
 }
-
+std::vector<double> QNode::getROSPosition(std::vector<double> joints)
+{
+  std::vector<double> pos;
+  motomini_state_ptr->setJointGroupPositions ("motomini_arm", joints);
+  geometry_msgs::Pose pose2;
+  tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("tool0"),pose);
+  tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("link_1_s"),pose2);
+  tf::Quaternion q(pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w);
+  tf::Matrix3x3 m(q);
+  double r, p, y;
+  m.getRPY(r,p,y);
+  pos.push_back(pose.position.x);
+  pos.push_back(pose.position.y);
+  pos.push_back(pose.position.z-pose2.position.z);
+  //pos.push_back(pose.position.z);
+  pos.push_back(r);
+  pos.push_back(p);
+  pos.push_back(y);
+ // std::cout << pos.at(0) << " " << pos.at(1) << " " << pos.at(2) << " " << pos.at(3) << " " << pos.at(4) << " " << pos.at(5) << std::endl;
+  return pos;
+}
 }  // namespace motorosudp

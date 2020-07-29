@@ -37,18 +37,38 @@ public:
 	MainWindow(int argc, char** argv, QWidget *parent = 0);
 	~MainWindow();
   MotoUDP* socket;
-
+  double current_position[6];
+  std::vector <double> current_joints_radian;
+  std::vector <double> current_positions;
+  int32_t current_pulse[6];
+  void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
+  void DefaultRealControl();
+  void DefaultSimulation();
 public Q_SLOTS:
   void on_pushButtonConnect_clicked();
   void RequestPosition();
   void DataReceiveHandler();
   void on_checkBoxReadRobotState_stateChanged(int arg1);
-  void on_pushButtonClearMarker_clicked();
+  void on_pushButtonSERVO_clicked();
+  void on_pushButtonHOME_clicked();
+  void on_comboBoxCoordinate_currentIndexChanged(int index);
+  void on_checkBoxDrawEndPoints_stateChanged(int arg1);
+  void on_pushButtonMOVJ_clicked();
+  void on_pushButtonMOVL_clicked();
+  void on_pushButton_2_clicked();
+  void on_comboBoxMode_activated(int index);
+  void on_pushButton_clicked();
+  //void on_pushButtonAdd_1_clicked(bool checked);
 
 private:
   Ui::MainWindowDesign* ui;
   QNode qnode;
   QTimer* timer;
+  QTimer* timer_;
+  bool isCartesianCoordinate;
+  bool isReadRobotState;
+  bool isSimulation;
+
 };
 
 }  // namespace motorosudp
