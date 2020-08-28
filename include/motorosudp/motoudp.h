@@ -17,7 +17,11 @@ public:
                         GET_VAR_POSITION = 0x06,
                         WRITE_VAR_POSITION = 0x07,
                         JOB_SELLECT = 0x08,
-                        JOB_START = 0x09
+                        JOB_START = 0x09,
+                        GET_STATUS,
+                        ALARM_CLEAR,
+                        FILE_TRANSMIT,
+                        FILE_RECEIVE
                        };
     ~MotoUDP();
     bool SendData (char* buffer, int lenght);
@@ -28,13 +32,15 @@ public:
     bool GetPosition();
     bool GetPulsePosition();
     bool GetVarPosition(u_int16_t index);
-    //not ok
-    bool SelectJob(QString jobname);
-    //not ok
+    bool SelectJob(char* jobname);
     bool StartJob();
     bool WritePosition(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
     bool WritePulse(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
     bool WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int32_t Z,int32_t RX,int32_t RY,int32_t RZ);
+    bool FileTransmitCommand(char name[]);
+    bool FileReceiveCommand(char name[]);
+    bool GetJobFile(QString path);
+    bool JobFile2ByteArray(QString path);
 
     int32_t* GetCurrentPosition();
     int32_t* GetCurrentPulse();
@@ -57,37 +63,29 @@ public:
     QUdpSocket* client;
     bool isDataReceive;
     void ReceiveData();
+    QByteArray* rx_file_buffer;
+    QByteArray* tx_file_buffer;
 
 private:
     QHostAddress _HostAddress;
     quint16 _port;
     QByteArray* rx_buffer;
+
+    u_int32_t index_file_transmit;
+    u_int32_t max_index_file_transmit;
+    u_int32_t last_byte_number;
+    bool last_data;
     int32_t current_position[6];
     int32_t current_pulse[6];
-    static const QString ON_SERVO_CMD;
-    static const QString OFF_SERVO_CMD;
-    static const QString GET_POS_CMD;
-    static const QString GET_PULSE_CMD;
-    static const QString WRITE_POS_HEADER;
-    static const QString WRITE_POS_END;
-    static const QString WRITE_PULSE_HEADER;
-    static const QString WRITE_PULSE_END;
-    static const QString WRITE_VARIABLE_POS;
-    static const QString READ_VARIABLE_POS;
-    static const QString SELECT_JOB;
-    static const QString START_JOB;
-
     static const double PULSE_PER_DEGREE_S;
     static const double PULSE_PER_DEGREE_L;
     static const double PULSE_PER_DEGREE_U;
     static const double PULSE_PER_DEGREE_RBT;
-
+    static const QString START_JOB;
     struct TxData;
     struct TxDataWritePosition;
     struct TxDataWritePulse;
     struct TxDataWriteVariablePosition;
-
-
 };
 
 #endif // MOTOUDP_H

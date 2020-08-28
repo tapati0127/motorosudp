@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>936</width>
-    <height>623</height>
+    <height>672</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -279,12 +279,32 @@
      </property>
      <item>
       <property name="text">
+       <string>192.168.1.11</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>192.168.1.12</string>
       </property>
      </item>
      <item>
       <property name="text">
+       <string>192.168.1.13</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>192.168.1.14</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>192.168.1.15</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>192.168.1.16</string>
       </property>
      </item>
     </widget>
@@ -323,12 +343,12 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>89</width>
+       <width>101</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>IP Adress:</string>
+      <string>IP Address:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -424,7 +444,7 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QGroupBox" name="groupBoxGoalPosition">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
@@ -603,7 +623,7 @@ p, li { white-space: pre-wrap; }
       </rect>
      </property>
      <property name="text">
-      <string>GOAL POSITION</string>
+      <string>GET POSITION</string>
      </property>
     </widget>
     <widget class="QTextEdit" name="textEdit1">
@@ -1033,6 +1053,32 @@ p, li { white-space: pre-wrap; }
       <string>U-</string>
      </property>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>600</y>
+      <width>118</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>600</y>
+      <width>118</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

@@ -34,8 +34,10 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   ui = new Ui::MainWindowDesign;
   timer = new QTimer;
   timer_ = new QTimer;
+  testTimer = new QTimer;
   connect(timer,SIGNAL(timeout()),this,SLOT(RequestPosition()));
   connect(timer_,SIGNAL(timeout()),this,SLOT(RequestPosition()));
+  connect(testTimer,SIGNAL(timeout()),this,SLOT(sendDataPosition()));
   ui->setupUi(this);
   qnode.init();
   QObject::connect(ui->actionAbout_Qt, SIGNAL(triggered(bool)), qApp, SLOT(aboutQt()));
@@ -45,6 +47,8 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   isReadRobotState = false;
   current_joints_radian.resize(6);
   timer_->start(20);
+  testTimer->start(1000);
+  temp=32;
 }
 
 MainWindow::~MainWindow() {
@@ -109,25 +113,25 @@ void motorosudp::MainWindow::RequestPosition()
     {
       current_joints_radian.at(5) -= M_PI/1000;
     }
-  }
-  qnode.publishJoint(current_joints_radian);
-  current_positions =  qnode.getROSPosition(current_joints_radian);
-  if(!isCartesianCoordinate)
-  {
-    ui->textBrowser1->setText(QString::number(current_joints_radian.at(0)*180/M_PI));
-    ui->textBrowser2->setText(QString::number(current_joints_radian.at(1)*180/M_PI));
-    ui->textBrowser3->setText(QString::number(current_joints_radian.at(2)*180/M_PI));
-    ui->textBrowser4->setText(QString::number(current_joints_radian.at(3)*180/M_PI));
-    ui->textBrowser5->setText(QString::number(current_joints_radian.at(4)*180/M_PI));
-    ui->textBrowser6->setText(QString::number(current_joints_radian.at(5)*180/M_PI));
-  }
-  else {
-    ui->textBrowser1->setText(QString::number(current_positions.at(0)*1000));
-    ui->textBrowser2->setText(QString::number(current_positions.at(1)*1000));
-    ui->textBrowser3->setText(QString::number(current_positions.at(2)*1000));
-    ui->textBrowser4->setText(QString::number(current_positions.at(3)*180/M_PI));
-    ui->textBrowser5->setText(QString::number(current_positions.at(4)*180/M_PI));
-    ui->textBrowser6->setText(QString::number(current_positions.at(5)*180/M_PI));
+    qnode.publishJoint(current_joints_radian);
+    current_positions =  qnode.getROSPosition(current_joints_radian);
+    if(!isCartesianCoordinate)
+    {
+      ui->textBrowser1->setText(QString::number(current_joints_radian.at(0)*180/M_PI));
+      ui->textBrowser2->setText(QString::number(current_joints_radian.at(1)*180/M_PI));
+      ui->textBrowser3->setText(QString::number(current_joints_radian.at(2)*180/M_PI));
+      ui->textBrowser4->setText(QString::number(current_joints_radian.at(3)*180/M_PI));
+      ui->textBrowser5->setText(QString::number(current_joints_radian.at(4)*180/M_PI));
+      ui->textBrowser6->setText(QString::number(current_joints_radian.at(5)*180/M_PI));
+    }
+    else {
+      ui->textBrowser1->setText(QString::number(current_positions.at(0)*1000));
+      ui->textBrowser2->setText(QString::number(current_positions.at(1)*1000));
+      ui->textBrowser3->setText(QString::number(current_positions.at(2)*1000));
+      ui->textBrowser4->setText(QString::number(current_positions.at(3)*180/M_PI));
+      ui->textBrowser5->setText(QString::number(current_positions.at(4)*180/M_PI));
+      ui->textBrowser6->setText(QString::number(current_positions.at(5)*180/M_PI));
+    }
   }
 }
 
@@ -154,12 +158,12 @@ void motorosudp::MainWindow::DataReceiveHandler()
       }
       if(!isCartesianCoordinate)
       {
-        ui->textBrowser1->setText(QString::number(current_joints_radian.at(0)*180/M_PI));
-        ui->textBrowser2->setText(QString::number(current_joints_radian.at(1)*180/M_PI));
-        ui->textBrowser3->setText(QString::number(current_joints_radian.at(2)*180/M_PI));
-        ui->textBrowser4->setText(QString::number(current_joints_radian.at(3)*180/M_PI));
-        ui->textBrowser5->setText(QString::number(current_joints_radian.at(4)*180/M_PI));
-        ui->textBrowser6->setText(QString::number(current_joints_radian.at(5)*180/M_PI));
+        ui->textBrowser1->setText(QString::number(current_joints_radian.at(0)*180/M_PI,'g',4));
+        ui->textBrowser2->setText(QString::number(current_joints_radian.at(1)*180/M_PI,'g',4));
+        ui->textBrowser3->setText(QString::number(current_joints_radian.at(2)*180/M_PI,'g',4));
+        ui->textBrowser4->setText(QString::number(current_joints_radian.at(3)*180/M_PI,'g',4));
+        ui->textBrowser5->setText(QString::number(current_joints_radian.at(4)*180/M_PI,'g',4));
+        ui->textBrowser6->setText(QString::number(current_joints_radian.at(5)*180/M_PI,'g',4));
       }
       else {
         ui->textBrowser1->setText(QString::number(current_positions.at(0)*1000));
@@ -179,7 +183,7 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
     ui->groupBoxCommand->setEnabled(true);
     //ui->groupBoxControl->setEnabled(true);
     ui->groupBoxDisplay->setEnabled(true);
-    ui->groupBoxGoalPosition->setEnabled(true);
+    //ui->groupBoxGoalPosition->setEnabled(true);
     ui->labelConnectStatus->setText("CONNECTED");
     ui->checkBoxDrawEndPoints->setEnabled(true);
     ui->checkBoxReadRobotState->setEnabled(true);
@@ -193,7 +197,7 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
     ui->groupBoxCommand->setEnabled(false);
     //ui->groupBoxControl->setEnabled(false);
     ui->groupBoxDisplay->setEnabled(false);
-    ui->groupBoxGoalPosition->setEnabled(false);
+    //ui->groupBoxGoalPosition->setEnabled(false);
     ui->labelConnectStatus->setText("NOT CONNECTED YET");
     ui->checkBoxDrawEndPoints->setEnabled(false);
     ui->checkBoxReadRobotState->setEnabled(false);
@@ -435,7 +439,19 @@ void motorosudp::MainWindow::on_pushButton_clicked()
 }
 
 
+void motorosudp::MainWindow::sendDataPosition()
+{
+  if(isReadRobotState)
+  {
+    if(temp==43)
+    {
+      temp=32;
+    }
+    socket->WriteVarPosition(42,160139,205057,87615,-1799971,58562,520114);
+    temp++;
+  }
 
+}
 //void motorosudp::MainWindow::on_pushButtonAdd_1_clicked(bool checked)
 //{
 //    while(checked)
@@ -443,3 +459,34 @@ void motorosudp::MainWindow::on_pushButton_clicked()
 //      current_joints_radian.at(0) += M_PI/1000;
 //    }
 //}
+
+void motorosudp::MainWindow::on_pushButton_3_clicked()
+{
+//    socket->WriteVarPosition(42,0,0,0,0,0,0);
+  char jobname[32] = {'T','E','S','T','0','4','0','7','.','J','B','I'};
+//  socket->SelectJob(jobname);
+//  socket->FileReceiveCommand(jobname);
+  socket->JobFile2ByteArray("/home/tapati/motoman_ws/src/motorosudp/TEST04072.JBI");
+  qDebug() << socket->tx_file_buffer->toHex();
+}
+
+void motorosudp::MainWindow::on_pushButtonMOVL_2_clicked()
+{
+//  QString a;
+//  a.resize(32);
+//  a = "TEST0407";
+
+  char jobname[32] = {'T','E','S','T','0','4','0','7','2','.','J','B','I'};
+//  socket->SelectJob(jobname);
+//  socket->FileReceiveCommand(jobname);
+  socket->FileTransmitCommand(jobname);
+}
+
+void motorosudp::MainWindow::on_pushButton_4_clicked()
+{
+   // socket->GetJobFile();
+  char jobname[13] = {'T','E','S','T','0','4','0','7','2','.','J','B','I'};
+//  socket->SelectJob(jobname);
+//  socket->FileReceiveCommand(jobname);
+  socket->FileTransmitCommand(jobname);
+}

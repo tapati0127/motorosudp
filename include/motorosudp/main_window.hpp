@@ -58,16 +58,22 @@ public Q_SLOTS:
   void on_pushButton_2_clicked();
   void on_comboBoxMode_activated(int index);
   void on_pushButton_clicked();
+  void sendDataPosition();
   //void on_pushButtonAdd_1_clicked(bool checked);
+  void on_pushButton_3_clicked();
+  void on_pushButtonMOVL_2_clicked();
+  void on_pushButton_4_clicked();
 
 private:
   Ui::MainWindowDesign* ui;
   QNode qnode;
   QTimer* timer;
   QTimer* timer_;
+  QTimer* testTimer;
   bool isCartesianCoordinate;
   bool isReadRobotState;
   bool isSimulation;
+  int temp;
 
 };
 
