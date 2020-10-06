@@ -21,7 +21,8 @@ public:
                         GET_STATUS,
                         ALARM_CLEAR,
                         FILE_TRANSMIT,
-                        FILE_RECEIVE
+                        FILE_RECEIVE,
+                        FILE_DELETE
                        };
     ~MotoUDP();
     bool SendData (char* buffer, int lenght);
@@ -39,8 +40,10 @@ public:
     bool WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int32_t Z,int32_t RX,int32_t RY,int32_t RZ);
     bool FileTransmitCommand(char name[]);
     bool FileReceiveCommand(char name[]);
+    bool FileDeleteCommand(char name[]);
     bool GetJobFile(QString path);
     bool JobFile2ByteArray(QString path);
+    bool ConnectToPLC(QHostAddress host, u_int port,uint16_t adr,uint16_t no_reg,std::vector<uint16_t> data);
 
     int32_t* GetCurrentPosition();
     int32_t* GetCurrentPulse();

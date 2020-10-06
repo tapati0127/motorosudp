@@ -203,13 +203,10 @@ bool  MotoUDP::MotoUDP::TurnOnServo()
     u_int16_t data_length = sizeof (data);
     u_int16_t total_length = 32 + data_length;
     sent_data.data_size = data_length;
-    char* buffer = new char[total_length];
+    char buffer [total_length];
     memcpy(buffer,&sent_data,32);
     memcpy(buffer+32,&data,data_length);
     SendData(buffer,total_length);
-    delete [] buffer;
-//    SendCommand(Hex2ByteArray(ON_SERVO_CMD));
-//    tx_data = ON_SERVO_CMD;
     return 1;
 }
 bool MotoUDP::MotoUDP::TurnOffServo()
@@ -224,50 +221,39 @@ bool MotoUDP::MotoUDP::TurnOffServo()
   u_int16_t data_length = sizeof (data);
   u_int16_t total_length = 32 + data_length;
   sent_data.data_size = data_length;
-  char* buffer = new char[total_length];
+  char buffer[total_length];
   memcpy(buffer,&sent_data,32);
   memcpy(buffer+32,&data,data_length);
   SendData(buffer,total_length);
-  delete [] buffer;
-//    SendCommand(Hex2ByteArray(OFF_SERVO_CMD));
-//    tx_data = OFF_SERVO_CMD;
     return 1;
 }
 bool MotoUDP::MotoUDP::GetPosition()
 {
   TxData sent_data;
-  char* buffer = new char[sizeof (sent_data)];
+  char buffer [sizeof (sent_data)];
   sent_data.id = RECEIVE_TYPE::GET_POSITION;
   sent_data.command_no = 0x75;
   sent_data.instance = 0x65;
   sent_data.attribute = 0;
   sent_data.service = 0x01;
   sent_data.data_size = 0;
-//  sent_data.data.resize(0);
   memcpy(buffer,&sent_data,sizeof (sent_data));
   SendData(buffer,sizeof (sent_data));
-  delete [] buffer;
-//    SendCommand(Hex2ByteArray(GET_POS_CMD));
-//    tx_data = GET_POS_CMD;
-    return 1;
+  return 1;
 }
 bool MotoUDP::MotoUDP::GetPulsePosition()
 {
   TxData sent_data;
-  char* buffer = new char[sizeof (sent_data)];
+  char buffer [sizeof (sent_data)];
   sent_data.id = RECEIVE_TYPE::GET_PULSE;
   sent_data.command_no = 0x75;
   sent_data.instance = 0x01;
   sent_data.attribute = 0;
   sent_data.service = 0x01;
   sent_data.data_size = 0;
-
   memcpy(buffer,&sent_data,sizeof (sent_data));
   SendData(buffer,sizeof (sent_data));
-  delete [] buffer;
-//    SendCommand(Hex2ByteArray(GET_PULSE_CMD));
-//    tx_data = GET_PULSE_CMD;
-    return 1;
+  return 1;
 }
 bool MotoUDP::MotoUDP::WritePosition(u_int16_t type,u_int32_t classification_in_speed,  u_int32_t speed,int32_t* pos)
 {
@@ -290,12 +276,11 @@ bool MotoUDP::MotoUDP::WritePosition(u_int16_t type,u_int32_t classification_in_
 
 
   sent_data.data_size = sizeof(position);
-  char* buffer = new char[sizeof(sent_data)+sizeof (position)];
+  char buffer[sizeof(sent_data)+sizeof (position)];
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof (sent_data),&position,sizeof (position));
   SendData(buffer,sizeof(sent_data)+sizeof (position));
-  delete [] buffer;
-    return 1;
+  return 1;
 }
 bool MotoUDP::MotoUDP::WritePulse(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos)
 {
@@ -316,18 +301,16 @@ bool MotoUDP::MotoUDP::WritePulse(u_int16_t type,u_int32_t classification_in_spe
   position.r6 = *(pos+5);
   position.speed = speed;
   sent_data.data_size = sizeof(position);
-  char* buffer = new char[sizeof(sent_data)+sizeof (position)];
+  char buffer [sizeof(sent_data)+sizeof (position)];
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof (sent_data),&position,sizeof (position));
   SendData(buffer,sizeof(sent_data)+sizeof (position));
-  delete [] buffer;
-
-    return 1;
+  return 1;
 }
 bool MotoUDP::MotoUDP::GetVarPosition(u_int16_t index)
 {
   TxData sent_data;
-  char* buffer = new char[sizeof (sent_data)];
+  char buffer [sizeof (sent_data)];
   sent_data.id = 06;
   sent_data.command_no = 0x7f;
   sent_data.instance = index;
@@ -337,8 +320,6 @@ bool MotoUDP::MotoUDP::GetVarPosition(u_int16_t index)
 
   memcpy(buffer,&sent_data,sizeof (sent_data));
   SendData(buffer,sizeof (sent_data));
-  delete [] buffer;
-//  SendCommand(Hex2ByteArray(READ_VARIABLE_POS));
   return true;
 }
 bool MotoUDP::MotoUDP::WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int32_t Z,int32_t RX,int32_t RY,int32_t RZ)
@@ -358,11 +339,10 @@ bool MotoUDP::MotoUDP::WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int
   position.fourth_axis_position = RX;
   position.fifth_axis_position = RY;
   position.sixth_axis_position = RZ;
-  char* buffer = new char[sizeof(sent_data)+ sizeof (position)];
+  char buffer[sizeof(sent_data)+ sizeof (position)];
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),&position,sizeof(position));
   SendData(buffer,sizeof(sent_data)+ sizeof (position));
-  delete [] buffer;
   return 1;
 }
 bool MotoUDP::MotoUDP::SelectJob(char* jobname){
@@ -374,21 +354,12 @@ bool MotoUDP::MotoUDP::SelectJob(char* jobname){
   sent_data.service = 0x02;
   sent_data.data_size = 36;
   u_int32_t line = 0;
-  char* buffer = new char[sizeof(sent_data)+ 36];
+  char buffer [sizeof(sent_data)+ 36];
 
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),jobname,32);
   memcpy(buffer+sizeof(sent_data)+32,&line,4);
   SendData(buffer,sizeof(sent_data)+36);
-  delete [] buffer;
-//  jobname.resize(32);
-//  QByteArray buffer;
-//  buffer.push_back(Hex2ByteArray(SELECT_JOB));
-//  for (int i = 0;i<32;i++) {
-//     buffer.push_back(jobname.at(i).toAscii());
-//  }
-//  buffer.push_back(Int32ToByteArray(0));
-//  SendCommand(buffer);
   return 1;
 }
 bool MotoUDP::MotoUDP::StartJob(){
@@ -400,12 +371,10 @@ bool MotoUDP::MotoUDP::StartJob(){
   sent_data.service = 0x10;
   u_int32_t data = 1;
   sent_data.data_size = sizeof (data);
-  char* buffer = new char[sizeof(sent_data)+ sizeof(data)];
+  char buffer [sizeof(sent_data)+ sizeof(data)];
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),&data,sizeof(data));
   SendData(buffer,sizeof(sent_data)+sizeof(data));
-  delete [] buffer;
-//  SendCommand(Hex2ByteArray(START_JOB));
   return 1;
 }
 void MotoUDP::MotoUDP::ReceiveData()
@@ -413,7 +382,7 @@ void MotoUDP::MotoUDP::ReceiveData()
     rx_buffer->resize(client->pendingDatagramSize());
     client->readDatagram(rx_buffer->data(),rx_buffer->size());
 
-    qDebug() << rx_buffer->toHex();
+    //qDebug() << rx_buffer->toHex();
     if(GetReceiveType(*rx_buffer) == GET_POSITION)
     {
       memcpy(current_position,rx_buffer->data()+52,24);
@@ -486,10 +455,7 @@ bool MotoUDP::MotoUDP::FileReceiveCommand(char name[]){
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),name,12);//
 
-  client->writeDatagram(buffer,32+12,_HostAddress,_port+1);//
-//  for (int t = 0 ;t < 32+12;t++) {
-//    qDebug() << u_int8_t(buffer[t]);
-//  }
+  client->writeDatagram(buffer,32+12,_HostAddress,_port+1);
   rx_file_buffer->resize(0);
 }
 bool MotoUDP::MotoUDP::FileTransmitCommand(char name[]){
@@ -513,6 +479,20 @@ bool MotoUDP::MotoUDP::FileTransmitCommand(char name[]){
   }
   index_file_transmit = 0;
   last_data = false;
+}
+bool MotoUDP::MotoUDP::FileDeleteCommand(char name[]){
+  TxData sent_data;
+  sent_data.id = RECEIVE_TYPE::FILE_DELETE;
+  sent_data.processing_division = 2;
+  sent_data.command_no = 0;
+  sent_data.instance = 0;
+  sent_data.attribute = 0;
+  sent_data.service = 0x9;
+  sent_data.data_size = 13;//
+  char buffer[64];//
+  memcpy(buffer,&sent_data,sizeof (sent_data));
+  memcpy(buffer+sizeof(sent_data),name,13);//
+  client->writeDatagram(buffer,32+13,_HostAddress,_port+1);//
 }
 bool MotoUDP::MotoUDP::GetJobFile(QString path){
   //"/home/tapati/motoman_ws/src/motorosudp/TEST0407.JBI"
@@ -589,14 +569,7 @@ double MotoUDP::MotoUDP::Pulse2Joint(int32_t pulse, int i)
     return double(pulse)/PULSE_PER_DEGREE_RBT;
   }
 }
-//std::vector<double> MotoUDP::MotoUDP::ByteArray2Position(QByteArray* pos_buffer)
-//{
-//    double pos[6];
-//    for (int i = 0; i < 6;i = i+4) {
-//      pos[i] = ByteArray2Int32(rx_buffer,4*i+52,4);
-//    }
-//    return pos;
-//}
+
 std::vector<double> MotoUDP::MotoUDP::ByteArray2Joint(QByteArray *pulse_buffer)
 {
   std::vector<double> pulse;
@@ -611,8 +584,33 @@ int32_t*  MotoUDP::MotoUDP::GetCurrentPosition(){
 int32_t*  MotoUDP::MotoUDP::GetCurrentPulse(){
   return current_pulse;
 }
+bool MotoUDP::MotoUDP::ConnectToPLC(QHostAddress host, u_int port,uint16_t adr,uint16_t no_reg,std::vector<uint16_t> data)
+{
+  struct tx{
+        uint8_t Command_type = 0x11;
+        uint8_t Identification_number = 0;
+        uint16_t channel_number = 0;
+        uint16_t not_use_1 = 0;
+        uint16_t total_lenght;
+        uint32_t not_use_2 = 0;
+        uint16_t data_lenght;
+        uint16_t MFC_SFC = 0x0B20;
+        uint16_t CPU_number = 16;
+        uint16_t reference_address ;
+        uint16_t number_register ;
+        uint16_t data_reg[];
+      } tx_data;
+      tx_data.reference_address = adr;
+      tx_data.number_register = no_reg;
+      memcpy(tx_data.data_reg,data.data(),data.size());
+      tx_data.data_lenght = 8 + 2*data.size();
+      tx_data.total_lenght = 14+tx_data.data_lenght;
+      char buffer[tx_data.total_lenght];
+      memcpy(buffer,&tx_data,sizeof(tx_data));
+      client->writeDatagram(buffer,sizeof(tx_data),host,port);
+      return true;
+}
 
-const QString MotoUDP::MotoUDP::START_JOB = "59 45 52 43 20 00 04 00 03 01 00 09 00 00 00 00 39 39 39 39 39 39 39 39 86 00 01 00 01 10 00 00 01 00 00 00";
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_S = 34816/30;
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_L = 102400/90;
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_U = 51200/90;

@@ -16,6 +16,8 @@
 #include "ui_main_window.h"
 #include "qnode.hpp"
 #include "motoudp.h"
+#include "dialogposition.h"
+
 #include <QTimer>
 
 /*****************************************************************************
@@ -44,6 +46,7 @@ public:
   void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
   void DefaultRealControl();
   void DefaultSimulation();
+  void InitObjectPosition();
 public Q_SLOTS:
   void on_pushButtonConnect_clicked();
   void RequestPosition();
@@ -63,17 +66,31 @@ public Q_SLOTS:
   void on_pushButton_3_clicked();
   void on_pushButtonMOVL_2_clicked();
   void on_pushButton_4_clicked();
+  void on_pushButton_6_clicked();
+  void on_pushButton_5_clicked();
+  void on_pushButton_7_clicked();
+  void on_pushButton_8_clicked();
+  void on_pushButton_9_clicked();
+  void on_pushButton_10_clicked();
+  void on_pushButton_11_clicked();
+  void on_pushButtonAddPoint_clicked();
+  void on_pushButtonRemovePoint_clicked();
+  void on_pushButtonCheckPoint_clicked();
+  void on_pushButtonModifyPoint_clicked();
 
 private:
   Ui::MainWindowDesign* ui;
   QNode qnode;
-  QTimer* timer;
-  QTimer* timer_;
-  QTimer* testTimer;
+  QTimer* timerReal;
+  QTimer* timerSimulation;
   bool isCartesianCoordinate;
-  bool isReadRobotState;
   bool isSimulation;
-  int temp;
+  std::vector <QString>* points_list;
+  std::vector <QString>* teaching_step;
+  std::vector <std::vector<double>> *points_value;
+  int index_points;
+  int index_step;
+  DialogPosition* dialogPosition;
 
 };
 

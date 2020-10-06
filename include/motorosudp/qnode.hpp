@@ -21,6 +21,8 @@
 #ifndef Q_MOC_RUN
 #include <ros/ros.h>
 #include <moveit_visual_tools/moveit_visual_tools.h>
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <interactive_markers/interactive_marker_server.h>
 #endif
 #include <string>
 #include <QThread>
@@ -44,12 +46,15 @@ public:
   geometry_msgs::Pose pose;
 	QNode(int argc, char** argv );
 	virtual ~QNode();
-	bool init();
+  bool init();
+  void run();
   void publishJoint(std::vector<double> joints);
   void publishMarker(std::vector<double> joints);
+  void publishPosition();
   void deleteMarker();
   std::vector<double> getROSPosition(std::vector<double> joints);
-
+  bool getJointsPosition(std::vector<double> pos,bool upper_lower,std::vector<double> &joints);
+  void updateInteractiveMarkers(bool visible);
 Q_SIGNALS:
   void rosShutdown();
 
@@ -58,11 +63,20 @@ private:
 	char** init_argv;
   ros::Publisher joint_publisher;
   ros::Publisher marker_publisher;
+  ros::Publisher interactive_publisher;
+  ros::Publisher position_publisher;
+  ros::ServiceClient client;
   moveit_msgs::DisplayRobotState robot_state;
   visualization_msgs::Marker marker;
   robot_model_loader::RobotModelLoader* motomini_model_loader;
   robot_model::RobotModelPtr motomini_model_ptr;
   robot_state::RobotState* motomini_state_ptr;
+  const moveit::core::JointModelGroup* motomini_model_group_ptr;
+  geometry_msgs::Pose position;
+  interactive_markers::InteractiveMarkerServer* server;
+//  interactive_markers::InteractiveMarkerServer server;
+
+
 
 };
 

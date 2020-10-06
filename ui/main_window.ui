@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>936</width>
-    <height>672</height>
+    <width>1036</width>
+    <height>897</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>MOTOROS UDP</string>
@@ -24,1069 +30,1107 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <widget class="QGroupBox" name="groupBoxCurrentPosition">
-    <property name="geometry">
-     <rect>
-      <x>680</x>
-      <y>150</y>
-      <width>231</width>
-      <height>381</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>CURRENT POSITION</string>
-    </property>
-    <widget class="QLabel" name="label1">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser1">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>30</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>L</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser2">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>90</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>160</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>U</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser3">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>150</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>220</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>R</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser4">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>210</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser5">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>270</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label6">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>T</string>
-     </property>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser6">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>330</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label6_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>340</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label4_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>220</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label1_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>40</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label3_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>160</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label5_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>280</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label2_2">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>100</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxUDP">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>921</width>
-      <height>91</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>UDP CONNECTION</string>
-    </property>
-    <widget class="QComboBox" name="comboBoxIPadress">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>40</y>
-       <width>151</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>192.168.1.11</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>192.168.1.12</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>192.168.1.13</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>192.168.1.14</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>192.168.1.15</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>192.168.1.16</string>
-      </property>
-     </item>
-    </widget>
-    <widget class="QTextEdit" name="textEditPort">
-     <property name="geometry">
-      <rect>
-       <x>340</x>
-       <y>40</y>
-       <width>151</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;10040&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonConnect">
-     <property name="geometry">
-      <rect>
-       <x>500</x>
-       <y>40</y>
-       <width>171</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>CONNECT</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>101</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>IP Address:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>50</y>
-       <width>51</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Port:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelConnectStatus">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>680</x>
-       <y>50</y>
-       <width>221</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>NOT CONNECTED YET!</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="labelMode">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>MODE:</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBoxMode">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>10</y>
-      <width>181</width>
-      <height>41</height>
-     </rect>
-    </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <property name="text">
-      <string>REAL CONTROL</string>
-     </property>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Teaching - Monitoring</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QGroupBox" name="groupBoxUDP">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
+          <property name="mouseTracking">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+          </property>
+          <property name="title">
+           <string>CONNECTION</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>ROBOT:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditrobotAddress">
+               <property name="text">
+                <string>192.168.1.1</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>MP3000:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="lineEditMP3000Address">
+               <property name="text">
+                <string>192.168.1.144</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QPushButton" name="pushButtonConnect">
+               <property name="text">
+                <string>CONNECT</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="labelConnectStatus">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="text">
+                <string>NOT CONNECTED YET!</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBoxsafety">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+          </property>
+          <property name="title">
+           <string>SAFETY</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>121</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelAlarmString">
+             <property name="text">
+              <string>NO ALARM</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>120</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonEStop">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(164, 0, 0);</string>
+             </property>
+             <property name="text">
+              <string>EMERGENCY STOP</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonAReset">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(237, 212, 0);
+color: rgb(238, 238, 236);</string>
+             </property>
+             <property name="text">
+              <string>ALARM RESET</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>121</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSplitter" name="splitter">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QGroupBox" name="groupBoxJOG">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+           </property>
+           <property name="title">
+            <string>JOG</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <widget class="QSplitter" name="splitter_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_1">
+               <property name="text">
+                <string>S-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_1">
+               <property name="text">
+                <string>S+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_2">
+               <property name="text">
+                <string>L-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_2">
+               <property name="text">
+                <string>L+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_3">
+               <property name="text">
+                <string>U-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_3">
+               <property name="text">
+                <string>U+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_4">
+               <property name="text">
+                <string>R-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_4">
+               <property name="text">
+                <string>R+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_6">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_5">
+               <property name="text">
+                <string>B-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_5">
+               <property name="text">
+                <string>B+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_7">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QPushButton" name="pushButtonSubb_6">
+               <property name="text">
+                <string>S-</string>
+               </property>
+              </widget>
+              <widget class="QPushButton" name="pushButtonAdd_6">
+               <property name="text">
+                <string>S+</string>
+               </property>
+              </widget>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSplitter" name="splitter_8">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <widget class="QComboBox" name="comboBoxCoordinate">
+               <item>
+                <property name="text">
+                 <string>JOINTS</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>CARTESIAN</string>
+                </property>
+               </item>
+              </widget>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="layoutWidget">
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QGroupBox" name="groupBoxRobotControl">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+              </property>
+              <property name="title">
+               <string>ROBOT</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QPushButton" name="pushButtonServo">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>SERVO ON</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <item>
+                    <spacer name="horizontalSpacer_30">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="labelStatusServo">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>Status: OFF</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_31">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButtonHoming">
+                   <property name="text">
+                    <string>HOMING</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QGroupBox" name="groupBoxConveyer">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+              </property>
+              <property name="title">
+               <string>CONVEYER</string>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <item>
+                  <widget class="QPushButton" name="pushButtonStartConveyer">
+                   <property name="text">
+                    <string>START</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_22">
+                   <item>
+                    <spacer name="horizontalSpacer_32">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="labelStatusConveyer">
+                     <property name="text">
+                      <string>Status: OFF</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_33">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+           </property>
+           <property name="title">
+            <string>CURRENT JOINTS</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>S</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditS">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>L</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditL">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="text">
+                 <string>U</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditU">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QLabel" name="label_13">
+                <property name="text">
+                 <string>R</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditR">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_11">
+              <item>
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>B</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditB">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_19">
+                <property name="text">
+                 <string>T</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditT">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+           </property>
+           <property name="title">
+            <string>CURRENT POSITIONS</string>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_13">
+              <item>
+               <widget class="QLabel" name="label_22">
+                <property name="text">
+                 <string>X</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditX">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_14">
+              <item>
+               <widget class="QLabel" name="label_25">
+                <property name="text">
+                 <string>Y</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditY">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_15">
+              <item>
+               <widget class="QLabel" name="label_28">
+                <property name="text">
+                 <string>Z</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditZ">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_16">
+              <item>
+               <widget class="QLabel" name="label_31">
+                <property name="text">
+                 <string>RX</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditRX">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_17">
+              <item>
+               <widget class="QLabel" name="label_34">
+                <property name="text">
+                 <string>RY</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditRY">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_18">
+              <item>
+               <widget class="QLabel" name="label_37">
+                <property name="text">
+                 <string>RZ</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEditRZ">
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <item>
+           <widget class="QGroupBox" name="groupBoxTeachingPoint">
+            <property name="styleSheet">
+             <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+            </property>
+            <property name="title">
+             <string>Teaching Points</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_24">
+               <item>
+                <widget class="QListWidget" name="listWidgetPoints"/>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QPushButton" name="pushButtonAddPoint">
+                   <property name="text">
+                    <string>ADD</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButtonRemovePoint">
+                   <property name="text">
+                    <string>REMOVE</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButtonModifyPoint">
+                   <property name="text">
+                    <string>MODIFY</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButtonCheckPoint">
+                   <property name="text">
+                    <string>CHECK</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_25">
+               <item>
+                <widget class="QPushButton" name="pushButtonGeneratePath">
+                 <property name="text">
+                  <string>GERNERATE PATH</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBoxTeachingStep">
+            <property name="styleSheet">
+             <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 9px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+            </property>
+            <property name="title">
+             <string>Teaching Steps</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_26">
+               <item>
+                <widget class="QListWidget" name="listWidgetSteps">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <widget class="QPushButton" name="pushButtonInsertStep">
+                   <property name="text">
+                    <string>INSERT</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButtonRemoveStep">
+                   <property name="text">
+                    <string>REMOVE</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_27">
+               <item>
+                <widget class="QPushButton" name="pushButtonPrograming">
+                 <property name="text">
+                  <string>PROGRAMING and PLAY</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Get File</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Get File COm</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_10">
+        <property name="geometry">
+         <rect>
+          <x>420</x>
+          <y>310</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>INIT</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="geometry">
+         <rect>
+          <x>810</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PLC</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="geometry">
+         <rect>
+          <x>500</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Send File</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="geometry">
+         <rect>
+          <x>370</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Make file</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="geometry">
+         <rect>
+          <x>650</x>
+          <y>260</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>DELETE</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_9">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>310</y>
+          <width>311</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>START SEND POSITION</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_11">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>310</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>STOP</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>110</y>
+          <width>118</width>
+          <height>33</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>MARKER</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
     </item>
-   </widget>
-   <widget class="QComboBox" name="comboBoxCoordinate">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>10</y>
-      <width>161</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>JOINTS</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>CARTESIAN</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QLabel" name="labelCoordinate">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>20</y>
-      <width>141</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>COORDINATE:</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxGoalPosition">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>231</width>
-      <height>441</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>GOAL POSITION</string>
-    </property>
-    <widget class="QLabel" name="label1_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label2_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>100</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>L</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label3_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>160</y>
-       <width>21</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>U</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label4_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>220</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>R</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label5_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>280</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>B</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label6_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>340</y>
-       <width>31</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>T</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label6_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>340</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label4_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>220</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label1_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>40</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label3_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>160</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label5_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>280</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label2_4">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>100</y>
-       <width>71</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>degree</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>7</x>
-       <y>380</y>
-       <width>211</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>GET POSITION</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit1">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>30</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit2">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>90</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit3">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>150</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit4">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>210</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit5">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>270</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit6">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>330</y>
-       <width>111</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxDisplay">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>530</y>
-      <width>461</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>REAL-TIME DISPLAY</string>
-    </property>
-    <widget class="QCheckBox" name="checkBoxReadRobotState">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>231</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>READ CURRENT STATE</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxDrawEndPoints">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>30</y>
-       <width>211</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>DRAW END POINTS</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxCommand">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>150</y>
-      <width>201</width>
-      <height>441</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>COMMAND</string>
-    </property>
-    <widget class="QPushButton" name="pushButtonSERVO">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>SERVO ON</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonHOME">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>HOMING</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonMOVJ">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>150</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>MOVJ</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonMOVL">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>MOVL</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textEdit5_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>330</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonMOVL_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>270</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>JOB SELECT</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>380</y>
-       <width>181</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>START JOB</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QLabel" name="label6_5">
-    <property name="geometry">
-     <rect>
-      <x>840</x>
-      <y>20</y>
-      <width>81</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>%VMAX</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="textEditVel">
-    <property name="geometry">
-     <rect>
-      <x>720</x>
-      <y>10</y>
-      <width>111</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="html">
-     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="labelCoordinate_2">
-    <property name="geometry">
-     <rect>
-      <x>610</x>
-      <y>20</y>
-      <width>101</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>VELOCITY:</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxControl">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>460</x>
-      <y>150</y>
-      <width>211</width>
-      <height>381</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>CONTROL</string>
-    </property>
-    <widget class="QPushButton" name="pushButtonAdd_3">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>150</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>U+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>210</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>R-</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_6">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>330</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S-</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonAdd_4">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>210</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>R+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>270</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>B-</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>L-</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_1">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S-</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonAdd_2">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>90</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>L+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonAdd_1">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>30</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonAdd_5">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>270</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>B+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonAdd_6">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>330</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>S+</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonSubb_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>150</y>
-       <width>91</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>U-</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>600</y>
-      <width>118</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>600</y>
-      <width>118</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>936</width>
+     <width>1036</width>
      <height>28</height>
     </rect>
    </property>
@@ -1101,7 +1145,21 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="action_Quit"/>
    </widget>
+   <widget class="QMenu" name="menuSetting">
+    <property name="title">
+     <string>Display</string>
+    </property>
+    <widget class="QMenu" name="menuDisplay_Option">
+     <property name="title">
+      <string>End-effecter Position</string>
+     </property>
+     <addaction name="actionEnable"/>
+     <addaction name="actionDisable"/>
+    </widget>
+    <addaction name="menuDisplay_Option"/>
+   </widget>
    <addaction name="menu_File"/>
+   <addaction name="menuSetting"/>
   </widget>
   <action name="action_Quit">
    <property name="text">
@@ -1127,6 +1185,24 @@ p, li { white-space: pre-wrap; }
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
+   </property>
+  </action>
+  <action name="actionEnable_Display_End_effecter_Position">
+   <property name="text">
+    <string>Enable Display End-effecter Position</string>
+   </property>
+  </action>
+  <action name="actionEnable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable</string>
+   </property>
+  </action>
+  <action name="actionDisable">
+   <property name="text">
+    <string>Disable</string>
    </property>
   </action>
  </widget>
