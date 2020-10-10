@@ -14,6 +14,7 @@
 #include <iostream>
 #include "../include/motorosudp/main_window.hpp"
 #include "../include/motorosudp/motoudp.h"
+#include "../include/motorosudp/capture.h"
 #include "../include/motorosudp/dialogposition.h"
 
 
@@ -55,6 +56,18 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   points_value = new std::vector <std::vector<double>>;
   index_points=0;
   index_step=0;
+
+//##############Frame Capture#############///
+
+  mOpenCV_videoCapture = new Capture(this);
+
+  QObject::connect(mOpenCV_videoCapture,SIGNAL(newPixmapCaptured_Color()), this, SLOT (handleButton()));
+
+}
+
+void MainWindow::handleButton()
+{
+    ui->CameraFrame->setPixmap(mOpenCV_videoCapture->pixmap_Color().scaled(640,480));
 }
 
 MainWindow::~MainWindow() {
@@ -63,6 +76,10 @@ MainWindow::~MainWindow() {
   delete teaching_step;
   delete points_value;
   //delete timer;
+
+  //Frame Capture
+  delete ui;
+  mOpenCV_videoCapture -> terminate();
 }
 
 
@@ -400,10 +417,7 @@ void motorosudp::MainWindow::on_pushButtonMOVL_clicked()
   GetPositionandMove(2,1);
 }
 
-void motorosudp::MainWindow::on_pushButton_2_clicked() //JobStart
-{
-    socket->StartJob();
-}
+
 
 void motorosudp::MainWindow::on_comboBoxMode_activated(int index)
 {
@@ -598,4 +612,114 @@ void motorosudp::MainWindow::on_pushButtonModifyPoint_clicked()
 {
     dialogPosition = new DialogPosition();
     dialogPosition->show();
+}
+
+
+
+void motorosudp::MainWindow::on_CameraOn_Button_clicked()
+{
+    mOpenCV_videoCapture->start(QThread::HighPriority);
+}
+
+void motorosudp::MainWindow::on_CameraOff_Button_clicked()
+{
+    mOpenCV_videoCapture->pipe.stop();
+    mOpenCV_videoCapture->terminate();
+}
+
+void motorosudp::MainWindow::on_StreamOption_comboBox_currentIndexChanged(const QString &arg1)
+{
+    if(ui->StreamOption_comboBox->currentText()=="Color Stream")
+    {
+         mOpenCV_videoCapture->StreamOption = 0;
+    }
+    else if(ui->StreamOption_comboBox->currentText()=="Depth Stream")
+    {
+        mOpenCV_videoCapture->StreamOption = 1;
+    }
+}
+
+void motorosudp::MainWindow::on_Background_Button_clicked()
+{
+  mOpenCV_videoCapture->MaskSingal = 0;
+  QPixmap OriginalPix(*ui->CameraFrame->pixmap());
+
+  mOpenCV_videoCapture->BackgroundImage = OriginalPix.toImage();
+
+  if(Find_Mask_Ready)
+  {
+      band = new Resizable_rubber_band(ui->CameraFrame);
+      band->move(100, 100);
+      band->resize(50, 50);
+      band->setMinimumSize(30, 30);
+      Find_Mask_Ready = 0;
+  }
+}
+
+void motorosudp::MainWindow::on_Mask_Button_clicked()
+{
+    QImage Background = mOpenCV_videoCapture->BackgroundImage;
+
+    QPoint center;
+    center = band->pos();
+    if (!Find_Mask_Ready)
+    {
+        mOpenCV_videoCapture->MaskTLPoint = cv::Point((center.x() ),(center.y() ));
+        mOpenCV_videoCapture->MaskBRPoint = cv::Point((center.x() + band->width()),(center.y() + band->height()));
+        mOpenCV_videoCapture->MaskSingal = 1;
+        band->close();
+        Find_Mask_Ready = 1;
+
+    }
+}
+
+Resizable_rubber_band::Resizable_rubber_band(QWidget *parent) : QWidget(parent) {
+    //tell QSizeGrip to resize this widget instead of top-level window
+    setWindowFlags(Qt::SubWindow);
+    QHBoxLayout* layout = new QHBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    QSizeGrip* grip1 = new QSizeGrip(this);
+    QSizeGrip* grip2 = new QSizeGrip(this);
+    layout->addWidget(grip1, 0, Qt::AlignLeft | Qt::AlignTop);
+    layout->addWidget(grip2, 0, Qt::AlignRight | Qt::AlignBottom);
+    rubberband = new QRubberBand(QRubberBand::Rectangle, this);
+    rubberband->move(0, 0);
+    rubberband->show();
+    show();
+}
+
+void Resizable_rubber_band::resizeEvent(QResizeEvent *) {
+    rubberband->resize(size());
+}
+void Resizable_rubber_band::mousePressEvent(QMouseEvent *event)
+{
+    if(rubberband->geometry().contains(event->pos()))
+    {
+        rubberband_offset = event->pos() - rubberband->pos();
+        move_rubberband = true;
+    }
+}
+
+void Resizable_rubber_band::mouseMoveEvent(QMouseEvent *event)
+{
+    if(move_rubberband)
+    {
+        rubberband->move(event->pos() - rubberband_offset);
+    }
+}
+
+void Resizable_rubber_band::mouseReleaseEvent(QMouseEvent *event)
+{
+    move_rubberband = false;
+}
+
+
+void motorosudp::MainWindow::on_ChooseObject_Button_clicked()
+{
+    mOpenCV_videoCapture->ChooseOBject ++;
+}
+
+void motorosudp::MainWindow::on_Size_Button_clicked()
+{
+    mOpenCV_videoCapture->Mearsure_Ready = !mOpenCV_videoCapture->Mearsure_Ready;
 }

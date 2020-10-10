@@ -16,10 +16,32 @@
 #include "ui_main_window.h"
 #include "qnode.hpp"
 #include "motoudp.h"
+#include "capture.h"
 #include "dialogposition.h"
 
 #include <QTimer>
+#include <QRubberBand>
+#include <QSizeGrip>
+#include <QMouseEvent>
+#include <QHBoxLayout>
 
+class Capture;
+//################Rubber_band##################################//
+class Resizable_rubber_band : public QWidget {
+public:
+    Resizable_rubber_band(QWidget* parent = 0);
+
+private:
+    QRubberBand* rubberband;
+    QPoint lastPoint, newPoint;
+    bool move_rubberband;
+    QPoint rubberband_offset;
+    void resizeEvent(QResizeEvent *);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+
+};
 /*****************************************************************************
 ** Namespace
 *****************************************************************************/
@@ -32,6 +54,8 @@ namespace motorosudp {
 /**
  * @brief Qt central, all operations relating to the view part here.
  */
+
+
 class MainWindow : public QMainWindow {
 Q_OBJECT
 
@@ -47,6 +71,9 @@ public:
   void DefaultRealControl();
   void DefaultSimulation();
   void InitObjectPosition();
+
+
+
 public Q_SLOTS:
   void on_pushButtonConnect_clicked();
   void RequestPosition();
@@ -58,7 +85,6 @@ public Q_SLOTS:
   void on_checkBoxDrawEndPoints_stateChanged(int arg1);
   void on_pushButtonMOVJ_clicked();
   void on_pushButtonMOVL_clicked();
-  void on_pushButton_2_clicked();
   void on_comboBoxMode_activated(int index);
   void on_pushButton_clicked();
   void sendDataPosition();
@@ -77,6 +103,14 @@ public Q_SLOTS:
   void on_pushButtonRemovePoint_clicked();
   void on_pushButtonCheckPoint_clicked();
   void on_pushButtonModifyPoint_clicked();
+  void on_CameraOff_Button_clicked();
+  void on_CameraOn_Button_clicked();
+  void on_StreamOption_comboBox_currentIndexChanged(const QString &arg1);
+  void on_Background_Button_clicked();
+  void on_Mask_Button_clicked();
+  void on_Size_Button_clicked();
+  void on_ChooseObject_Button_clicked();
+  void handleButton() ;
 
 private:
   Ui::MainWindowDesign* ui;
@@ -92,7 +126,16 @@ private:
   int index_step;
   DialogPosition* dialogPosition;
 
+  Capture *mOpenCV_videoCapture;
+  bool Find_Mask_Ready = 1;
+  Resizable_rubber_band *band;
+
+
+
+
 };
+
+
 
 }  // namespace motorosudp
 

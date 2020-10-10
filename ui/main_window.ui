@@ -37,7 +37,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -1121,6 +1121,137 @@ QGroupBox::title {
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <widget class="QLabel" name="CameraFrame">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>60</y>
+          <width>640</width>
+          <height>480</height>
+         </rect>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>640</width>
+          <height>480</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="CameraOn_Button">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>20</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Camera On</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="CameraOff_Button">
+        <property name="geometry">
+         <rect>
+          <x>120</x>
+          <y>20</y>
+          <width>89</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Camera Off</string>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="StreamOption_comboBox">
+        <property name="geometry">
+         <rect>
+          <x>230</x>
+          <y>20</y>
+          <width>121</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <item>
+         <property name="text">
+          <string>Color Stream</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Depth Stream</string>
+         </property>
+        </item>
+       </widget>
+       <widget class="QPushButton" name="Background_Button">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>20</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Background</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Mask_Button">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>60</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Select Mask</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="ChooseObject_Button">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>100</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ChooseObject</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="Size_Button">
+        <property name="geometry">
+         <rect>
+          <x>680</x>
+          <y>140</y>
+          <width>101</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Mearsure</string>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -1131,7 +1262,7 @@ QGroupBox::title {
      <x>0</x>
      <y>0</y>
      <width>1036</width>
-     <height>28</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
