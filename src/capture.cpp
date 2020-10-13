@@ -42,7 +42,7 @@ cv::Mat Background_Subtraction(cv::Mat Frame, cv::Mat BackgroundMat, cv::Mat Mas
     float threshold = sum/cnt ;
 
     //std::cout << "threshold = " << threshold << std::endl;
-    if (threshold <25)  threshold = 50;
+    if (threshold <12)  threshold = 12;
 
 
     //cv::Mat AfThreshold = Subtraction(cv::Rect(TL,BR));
@@ -193,7 +193,8 @@ void Tranfer_CorRobot(float x_cam, float y_cam, float z_cam,
 }
 void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < std::vector<cv::Point> > blobs,
                              size_t &numberblob,rs2::depth_frame depth, bool Mearsure_Ready,
-                             float &x_robot, float &y_robot, float &z_robot, bool &Found_Object)
+                             float &x_robot, float &y_robot, float &z_robot, bool &Found_Object,
+                             float &Rx, float &Ry, float &Rz)
 {
     cv::RotatedRect marker;
     cv::Mat boxPts,mean;
@@ -265,7 +266,10 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
 
     if (A != B) theta = std::atan(-(A.y - B.y)/(A.x - B.x))*180/3.14;
     else theta =0;
-
+    //Calculate Rx, Ry, Rz
+    Rx = 180;
+    Ry = 0;
+    Rz = 90 -theta -25;
     //between the top-left and top-right coordinates, followed by
     //the midpoint between bottom-left and bottom-right coordinates
     cv::Point2f tltr =  (cv::Point2f(boxPts.at<float>(2,0),boxPts.at<float>(2,1))+
@@ -302,7 +306,7 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     float dis = FindDistance(depth,center, x_cam,y_cam,z_cam );
 
     Tranfer_CorRobot(x_cam*1000, y_cam*1000, z_cam*1000, x_robot,y_robot,z_robot);
-    std::cout << "x : " << x_robot << " " << "y : " << y_robot<< " " << "z : " << z_robot<< std::endl;
+    std::cout << "x : " << x_robot << " " << "y : " << y_robot<< " " << "z : " << z_robot<< " " << "Rz : " << Rz<< std::endl;
     //String
     char text[200];
 
@@ -404,7 +408,7 @@ void Capture::run()
                 //Step 3: Find Contour
                 cv::Mat Frame_Draw;
                 detectOject_findContour(mFrame_Color,Frame_Draw, blobs, ChooseOBject,depth_frame,Mearsure_Ready,
-                                        x_robot, y_robot, z_robot, Found_Object);
+                                        x_robot, y_robot, z_robot, Found_Object, Rx, Ry, Rz);
 
 
 

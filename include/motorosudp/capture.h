@@ -26,8 +26,9 @@ public:
     size_t ChooseOBject;
     QImage BackgroundImage;
     cv::Point MaskTLPoint, MaskBRPoint = cv::Point(0,0);
-    float x_robot, y_robot, z_robot;
+    float x_robot, y_robot, z_robot, Rx, Ry, Rz;
     bool Found_Object = 0;
+
 
 Q_SIGNALS:
     void newPixmapCaptured_Color();
