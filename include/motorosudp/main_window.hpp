@@ -63,10 +63,10 @@ public:
 	MainWindow(int argc, char** argv, QWidget *parent = 0);
 	~MainWindow();
   MotoUDP* socket;
-  double current_position[6];
+ // double current_position[6];
   std::vector <double> current_joints_radian;
   std::vector <double> current_positions;
-  int32_t current_pulse[6];
+  //int32_t current_pulse[6];
   void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
   void DefaultRealControl();
   void DefaultSimulation();
@@ -78,6 +78,7 @@ public Q_SLOTS:
   void on_pushButtonConnect_clicked();
   void RequestPosition();
   void DataReceiveHandler();
+  void SampleHandler();
   void on_checkBoxReadRobotState_stateChanged(int arg1);
   void on_pushButtonSERVO_clicked();
   void on_pushButtonHOME_clicked();
@@ -111,12 +112,14 @@ public Q_SLOTS:
   void on_Size_Button_clicked();
   void on_ChooseObject_Button_clicked();
   void handleButton() ;
+  void on_pushButtonConnectSerial_clicked();
 
 private:
   Ui::MainWindowDesign* ui;
   QNode qnode;
   QTimer* timerReal;
   QTimer* timerSimulation;
+  QTimer* timerSample;
   bool isCartesianCoordinate;
   bool isSimulation;
   std::vector <QString>* points_list;

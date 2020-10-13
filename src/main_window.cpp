@@ -40,8 +40,10 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   qnode.init();
   timerReal = new QTimer;
   timerSimulation = new QTimer;
+  timerSample = new QTimer;
   connect(timerReal,SIGNAL(timeout()),this,SLOT(RequestPosition()));
   connect(timerSimulation,SIGNAL(timeout()),this,SLOT(RequestPosition()));
+  connect(timerSample,SIGNAL(timeout()),this,SLOT(SampleHandler()));
   isCartesianCoordinate = false;
   isSimulation = true;
 
@@ -722,4 +724,19 @@ void motorosudp::MainWindow::on_ChooseObject_Button_clicked()
 void motorosudp::MainWindow::on_Size_Button_clicked()
 {
     mOpenCV_videoCapture->Mearsure_Ready = !mOpenCV_videoCapture->Mearsure_Ready;
+}
+
+void motorosudp::MainWindow::on_pushButtonConnectSerial_clicked()
+{
+  if(qnode.connectSerial()){
+    ui->labelSerialStatus->setText("Connected");
+    qnode.sendFirstDataToSerial(ui->spinBoxEncoderType->value(),ui->doubleSpinBoxRatio->value());
+    timerSample->start(ui->spinBoxSampleTime->value());
+  }
+  else{
+    QMessageBox::critical(this,"Error","Can not connect to serial");
+  }
+}
+void motorosudp::MainWindow::SampleHandler(){
+  ui->lineEditSpeed->setText(QString::number(qnode.getVelocity()*15));
 }

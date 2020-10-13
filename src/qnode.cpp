@@ -24,6 +24,7 @@
 #include <moveit/robot_state/conversions.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/interactive_marker_server.h>
+#include <serial/serial.h>
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -52,17 +53,18 @@ QNode::~QNode() {
 void processFeedback(
     const visualization_msgs::InteractiveMarkerFeedbackConstPtr &feedback )
 {
-  tf::Quaternion q(feedback->pose.orientation.x,feedback->pose.orientation.y,feedback->pose.orientation.z,feedback->pose.orientation.w);
-  tf::Matrix3x3 m(q);
-  double r, p, y;
-  m.getRPY(r,p,y);
-  std::vector<double> pos,joints;
-  pos.push_back(feedback->pose.position.x);
-  pos.push_back(feedback->pose.position.y);
-  pos.push_back(feedback->pose.position.z);
-  pos.push_back(r);
-  pos.push_back(p);
-  pos.push_back(y);
+  std::cout << "Feedback" << std::endl;
+//  tf::Quaternion q(feedback->pose.orientation.x,feedback->pose.orientation.y,feedback->pose.orientation.z,feedback->pose.orientation.w);
+//  tf::Matrix3x3 m(q);
+//  double r, p, y;
+//  m.getRPY(r,p,y);
+//  std::vector<double> pos,joints;
+//  pos.push_back(feedback->pose.position.x);
+//  pos.push_back(feedback->pose.position.y);
+//  pos.push_back(feedback->pose.position.z);
+//  pos.push_back(r);
+//  pos.push_back(p);
+//  pos.push_back(y);
 
 //  if(getJointsPosition(pos,true,joints)){
 //    robot_state.state.joint_state.position=joints;
@@ -182,6 +184,9 @@ bool QNode::init() {
   marker.color.g = 1.0;
   marker.color.b = 0.0;
   //vis_pub.publish( marker );
+
+
+
   start();
   ROS_INFO("Thread for ROS is started.");
   //ros::spin();
@@ -189,7 +194,19 @@ bool QNode::init() {
 }
 void QNode::run(){
 // std::cout << "Start" << std::endl;
-  ros::spin();
+  while(ros::ok())
+  {
+      if(COM.available())
+      {
+          int size = COM.available();
+          uint8_t buffer[8];
+          COM.read(buffer,size);
+          memcpy(&velocity,buffer,8);
+          //std::cout << v << std::endl;
+      }
+      ros::spinOnce();
+  }
+  //ros::spin();
 }
 
 
@@ -369,167 +386,43 @@ bool QNode::getJointsPosition(std::vector<double> pos,bool upper_lower,std::vect
   joints.at(4)=(theta[4]+M_PI/2);
   joints.at(5) = -theta[5];
   return true;
-  //double c3[2] ;
+}
+bool QNode::connectSerial(){
 
-    //c3[1] = (temp[1]*temp[1]+temp1)/temp2;
-//    double s3[4];
-//    s3[0]=sqrt(1-c3[0]*c3[0]);
-//    s3[1]=-sqrt(1-c3[0]*c3[0]);
-    //s3[2]=sqrt(1-c3[1]*c3[1]);
-    //s3[3]=-sqrt(1-c3[1]*c3[1]);
-   // std::cout << "theta3(1)" << atan2(s3[0],c3[0]) << std::endl;
-//      double c2[4],s2[4];
-//      double temp3[2];
-//      double temp4[2];
-//      double temp5[4];
-//      temp3[0]=0.165*0.165*2+2*0.165*0.165*c3[0];
-//      temp3[1]=0.165*0.165*2+2*0.165*0.165*c3[1];
-//      temp4[0]=0.165+0.165*c3[0];
-//      temp4[1]=0.165+0.165*c3[1];
-//      temp5[0]=0.165*s3[0];
-//      temp5[1]=0.165*s3[1];
-      //temp5[2]=0.165*s3[2];
-      //temp5[3]=0.165*s3[3];
+  if(!COM.isOpen()){
+    try
+      {
+      COM.setBaudrate(115200);
+      COM.setPort("/dev/ttyUSB0");
+      serial::Timeout to = serial::Timeout::simpleTimeout(10);
+      COM.setTimeout(to);
+      COM.open();
+      }
+      catch (std::exception &e)
+      {
+        std::cout << e.what() << '\n';
+      }
+  }
+  return (COM.isOpen());
+}
+bool QNode::sendFirstDataToSerial(int encodertype, double ratio)
+{
+  uint8_t buffer[12];
+  mempcpy(buffer,&encodertype,sizeof(int));
+  mempcpy(buffer+sizeof(int),&ratio,sizeof(double));
+  if(COM.isOpen())
+  {
+      try{
+          std::cout << COM.write(buffer,12) << std::endl;
+      }
+      catch (serial::IOException& e)
+      {
+          ROS_ERROR("ERROR!");
+      }
 
-//      c2[0]=(temp[0]*temp4[0]+(zc-0.103)*temp5[0])/temp3[0];
-//      s2[0]=(-temp[0]*temp5[0]+(zc-0.103)*temp4[0])/temp3[0];
-
-//      c2[1]=(temp[0]*temp4[0]+(zc-0.103)*temp5[1])/temp3[0];
-//      s2[1]=(-temp[0]*temp5[1]+(zc-0.103)*temp4[0])/temp3[0];
-
-      //c2[2]=(temp[1]*temp4[1]+(zc-0.103)*temp5[2])/temp3[1];
-      //s2[2]=(-temp[1]*temp5[2]+(zc-0.103)*temp4[1])/temp3[1];
-
-      //c2[3]=(temp[1]*temp4[1]+(zc-0.103)*temp5[3])/temp3[1];
-      //s2[3]=(-temp[1]*temp5[3]+(zc-0.103)*temp4[1])/temp3[1];
-
-
-//    if(c3[0]>=-1&&c3[0]<=1)
-//    {
-////        std::cout << "theta3(0) " << atan2(s3[0],c3[0])+M_PI/2 << std::endl;
-////        std::cout << "theta3(1) " << atan2(s3[1],c3[0])+M_PI/2<< std::endl;
-
-//        if(c2[0]>=-1&&c2[0]<=1&&s2[0]>=-1&&s2[0]<=1)
-//        {
-//            //std::cout << "theta2(0) " << atan2(s2[0],c2[0]) -M_PI/2<< std::endl;
-//        }
-//        if(c2[1]>=-1&&c2[1]<=1&&s2[1]>=-1&&s2[1]<=1)
-//        {
-//           //std::cout << "theta2(1) " << atan2(s2[1],c2[1])-M_PI/2 << std::endl;
-//        }
-//    }
-//    else
-//    {
-//      std::cout << "Cannot find the IK" << std::endl;
-//      return false;
-//    }
-////    if(c3[1]>=-1&&c3[1]<=1)
-////    {
-////      std::cout << "theta3(2) " << atan2(s3[2],c3[1])+M_PI/2 << std::endl;
-////      std::cout << "theta3(3) " << atan2(s3[3],c3[1])+M_PI/2 << std::endl;
-////      if(c2[2]>=-1&&c2[2]<=1&&s2[2]>=-1&&s2[2]<=1)
-////      {
-////          std::cout << "theta2(2) " << atan2(s2[2],c2[2]) -M_PI/2<< std::endl;
-////      }
-////      if(c2[3]>=-1&&c2[3]<=1&&s2[3]>=-1&&s2[3]<=1)
-////      {
-////          std::cout << "theta2(3) " << atan2(s2[3],c2[3])-M_PI/2 << std::endl;
-////      }
-////    }
-//    double theta1 = atan2(yc,xc);
-//    //double theta1 = atan2(yc,xc)-M_PI;
-//    double theta2 = atan2(s2[2],c2[2]);
-//    double theta3 = atan2(s3[2],c3[1]);
-
-    /*
-     R = [-sin(theta2 + theta3)*cos(theta1),  sin(theta1), cos(theta2 + theta3)*cos(theta1);...
-    -sin(theta2 + theta3)*sin(theta1), -cos(theta1), cos(theta2 + theta3)*sin(theta1);...
-      cos(theta2 + theta3),            0,             sin(theta2 + theta3)];
-     */
-
-
-
-
-//  tf2::Quaternion myQuaternion;
-//  myQuaternion.setRPY( pos.at(3), pos.at(4), pos.at(5) );
-//  geometry_msgs::Quaternion quat_msg;
-//  quat_msg = tf2::toMsg(myQuaternion);
-//  geometry_msgs::Pose pose;
-//  pose.position.x = pos.at(0);
-//  pose.position.y = pos.at(1);
-//  pose.position.z = pos.at(2);
-//  pose.orientation = quat_msg;
-//  motomini_state_ptr->setJointGroupPositions ("motomini_arm", current_joints);
-//  if(motomini_state_ptr->setFromIK(motomini_model_group_ptr,pose)){
-//     std::cout << "OK" << std::endl;
-//    for (int i=0;i<6;i++) {
-//      std::cout << *(motomini_state_ptr->getVariablePositions()+i) << std::endl;
-//    }
-
-//    return true;
-//  }
-//  else {
-//    return false;
-//  }
-
-
-//  moveit_msgs::GetPositionIK srv;
-//  srv.request.ik_request.group_name = "motomini_arm";
-//  std::cout << "Position:" << std::endl;
-//  srv.request.ik_request.pose_stamped.pose.position.x = pos.at(0);
-//  std::cout <<srv.request.ik_request.pose_stamped.pose.position.x << std::endl;
-//  srv.request.ik_request.pose_stamped.pose.position.y = pos.at(1);
-//   std::cout <<srv.request.ik_request.pose_stamped.pose.position.y << std::endl;
-//  srv.request.ik_request.pose_stamped.pose.position.z = pos.at(2);
-//   std::cout <<srv.request.ik_request.pose_stamped.pose.position.z << std::endl;
-//  srv.request.ik_request.pose_stamped.pose.orientation = quat_msg;
-//  std::cout <<srv.request.ik_request.pose_stamped.pose.orientation.w << std::endl;
-//  std::cout <<srv.request.ik_request.pose_stamped.pose.orientation.x << std::endl;
-//  std::cout <<srv.request.ik_request.pose_stamped.pose.orientation.y<< std::endl;
-//  std::cout <<srv.request.ik_request.pose_stamped.pose.orientation.z << std::endl;
-
-//  motomini_state_ptr->setJointGroupPositions ("motomini_arm", current_joints);
-//  moveit::core::robotStateToRobotStateMsg(*motomini_state_ptr,srv.request.ik_request.robot_state);
-//  std::cout << "Current" << std::endl;
-//  for(int i=0;i<6;i++)
-//  {
-//   std::cout <<srv.request.ik_request.robot_state.joint_state.position.at(i) << std::endl;
-//  }
-//  srv.request.ik_request.timeout = ros::Duration(1000);
-//  //srv.request.ik_request.attempts = 10;
-
-//  client.call(srv);
-
-//  std::cout << "Answer: " << srv.response.error_code.val << std::endl;
-//  if(srv.response.error_code.val != 1)
-//  {
-//    return false;
-//  }
-//    joints=srv.response.solution.joint_state.position;
-//    for(int i=0;i<6;i++)
-//    {
-//     std::cout << joints.at(i) << std::endl;
-//    }
-
-
-
-//  std::vector<double> pos;
-//  motomini_state_ptr->setJointGroupPositions ("motomini_arm", joints);
-//  geometry_msgs::Pose pose2;
-//  tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("tool0"),pose);
-//  tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("link_1_s"),pose2);
-//  tf::Quaternion q(pose.orientation.x,pose.orientation.y,pose.orientation.z,pose.orientation.w);
-//  tf::Matrix3x3 m(q);
-//  double r, p, y;
-//  m.getRPY(r,p,y);
-//  pos.push_back(pose.position.x);
-//  pos.push_back(pose.position.y);
-//  pos.push_back(pose.position.z-pose2.position.z);
-//  //pos.push_back(pose.position.z);
-//  pos.push_back(r);
-//  pos.push_back(p);
-//  pos.push_back(y);
-// // std::cout << pos.at(0) << " " << pos.at(1) << " " << pos.at(2) << " " << pos.at(3) << " " << pos.at(4) << " " << pos.at(5) << std::endl;
-
+  }
+}
+double QNode::getVelocity(){
+  return velocity;
 }
 }  // namespace motorosudp

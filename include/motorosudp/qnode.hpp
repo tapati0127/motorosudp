@@ -23,6 +23,7 @@
 #include <moveit_visual_tools/moveit_visual_tools.h>
 #include <moveit/move_group_interface/move_group_interface.h>
 #include <interactive_markers/interactive_marker_server.h>
+#include <serial/serial.h>
 #endif
 #include <string>
 #include <QThread>
@@ -55,6 +56,9 @@ public:
   std::vector<double> getROSPosition(std::vector<double> joints);
   bool getJointsPosition(std::vector<double> pos,bool upper_lower,std::vector<double> &joints);
   void updateInteractiveMarkers(bool visible);
+  bool connectSerial();
+  bool sendFirstDataToSerial(int encodertype, double ratio);
+  double getVelocity();
 Q_SIGNALS:
   void rosShutdown();
 
@@ -74,6 +78,8 @@ private:
   const moveit::core::JointModelGroup* motomini_model_group_ptr;
   geometry_msgs::Pose position;
   interactive_markers::InteractiveMarkerServer* server;
+  serial::Serial COM;
+  double velocity;
 //  interactive_markers::InteractiveMarkerServer server;
 
 
