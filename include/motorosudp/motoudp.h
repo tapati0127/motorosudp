@@ -49,7 +49,7 @@ public:
     int32_t* GetCurrentPulse();
 
     std::vector<double> ByteArray2Joint(QByteArray *pulse_buffer);
-    RECEIVE_TYPE GetReceiveType (QByteArray buffer);
+    RECEIVE_TYPE GetReceiveType ();
     bool CheckReceivedData(QByteArray buffer);
     QByteArray SplitArray(QByteArray array,int start, int count);
     int32_t Joint2Pulse(double joint, int i);

@@ -193,7 +193,7 @@ void Tranfer_CorRobot(float x_cam, float y_cam, float z_cam,
 }
 void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < std::vector<cv::Point> > blobs,
                              size_t &numberblob,rs2::depth_frame depth, bool Mearsure_Ready,
-                             float &x_robot, float &y_robot, float &z_robot, bool &Found_Object,
+                             float &x_robot, float &y_robot, float &z_robot, bool &Found_Object,bool &Found_Object_Mid,
                              float &Rx, float &Ry, float &Rz)
 {
     cv::RotatedRect marker;
@@ -204,7 +204,7 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     cv::Mat MaskGray;
     cv::cvtColor(Mask,MaskGray,cv::COLOR_BGR2GRAY);
 
-    if (blobs.empty()) Found_Object = 0 ; else Found_Object = 1;
+    if (blobs.empty()) Found_Object = 0; else Found_Object = 1;
     if (!blobs.empty())
     {
         if (numberblob >= blobs.size()) {numberblob = 0;}
@@ -306,7 +306,9 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     float dis = FindDistance(depth,center, x_cam,y_cam,z_cam );
 
     Tranfer_CorRobot(x_cam*1000, y_cam*1000, z_cam*1000, x_robot,y_robot,z_robot);
-    std::cout << "x : " << x_robot << " " << "y : " << y_robot<< " " << "z : " << z_robot<< " " << "Rz : " << Rz<< std::endl;
+    //Set signal for Robot
+    if(y_robot >= -265) Found_Object_Mid = 1; else Found_Object_Mid = 0;
+    //std::cout << "x : " << x_robot << " " << "y : " << y_robot<< " " << "z : " << z_robot<< " " << "Rz : " << Rz<< std::endl;
     //String
     char text[200];
 
@@ -408,7 +410,7 @@ void Capture::run()
                 //Step 3: Find Contour
                 cv::Mat Frame_Draw;
                 detectOject_findContour(mFrame_Color,Frame_Draw, blobs, ChooseOBject,depth_frame,Mearsure_Ready,
-                                        x_robot, y_robot, z_robot, Found_Object, Rx, Ry, Rz);
+                                        x_robot, y_robot, z_robot, Found_Object, Found_Object_Mid, Rx, Ry, Rz);
 
 
 

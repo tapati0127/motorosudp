@@ -27,7 +27,7 @@ public:
     QImage BackgroundImage;
     cv::Point MaskTLPoint, MaskBRPoint = cv::Point(0,0);
     float x_robot, y_robot, z_robot, Rx, Ry, Rz;
-    bool Found_Object = 0;
+    bool Found_Object, Found_Object_Mid = 0;
 
 
 Q_SIGNALS:

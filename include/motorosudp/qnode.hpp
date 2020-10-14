@@ -57,8 +57,9 @@ public:
   bool getJointsPosition(std::vector<double> pos,bool upper_lower,std::vector<double> &joints);
   void updateInteractiveMarkers(bool visible);
   bool connectSerial();
-  bool sendFirstDataToSerial(int encodertype, double ratio);
-  double getVelocity();
+  bool sendFirstDataToSerial(int encodertype, double ratio,int32_t* pos,uint enable);
+  int32_t* getObjectPosition();
+  bool jointLimit(std::vector<double> joints);
 Q_SIGNALS:
   void rosShutdown();
 
@@ -79,7 +80,9 @@ private:
   geometry_msgs::Pose position;
   interactive_markers::InteractiveMarkerServer* server;
   serial::Serial COM;
-  double velocity;
+  int32_t object_position[6];
+  std::vector<double> joint_limit_up;
+  std::vector<double> joint_limit_down;
 //  interactive_markers::InteractiveMarkerServer server;
 
 

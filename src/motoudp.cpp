@@ -382,15 +382,15 @@ void MotoUDP::MotoUDP::ReceiveData()
     rx_buffer->resize(client->pendingDatagramSize());
     client->readDatagram(rx_buffer->data(),rx_buffer->size());
 
-    //qDebug() << rx_buffer->toHex();
-    if(GetReceiveType(*rx_buffer) == GET_POSITION)
+    qDebug() << rx_buffer->toHex();
+    if(GetReceiveType() == GET_POSITION && rx_buffer->at(26)==0)
     {
       memcpy(current_position,rx_buffer->data()+52,24);
     }
-    else if (GetReceiveType(*rx_buffer) == GET_PULSE) {
+    else if (GetReceiveType() == GET_PULSE && rx_buffer->at(26)==0) {
       memcpy(current_pulse,rx_buffer->data()+52,24);
     }
-    else if (GetReceiveType(*rx_buffer) == FILE_RECEIVE) {
+    else if (GetReceiveType() == FILE_RECEIVE && rx_buffer->at(26)==0) {
       for (int i = 32;i<rx_buffer->size();i++) {
         rx_file_buffer->push_back(rx_buffer->at(i));
 //        qDebug() << rx_buffer->toHex();
@@ -406,7 +406,7 @@ void MotoUDP::MotoUDP::ReceiveData()
       memcpy(data,&header,32);
       client->writeDatagram(data,32,_HostAddress,_port+1);
     }
-    else if (GetReceiveType(*rx_buffer) == FILE_TRANSMIT) {
+    else if (GetReceiveType() == FILE_TRANSMIT&& rx_buffer->at(26)==0) {
       if(last_data==true)
       {
         return;
@@ -513,9 +513,9 @@ QByteArray* MotoUDP::MotoUDP::Get_rx_buffer()
 {
     return rx_buffer;
 }
-MotoUDP::MotoUDP::RECEIVE_TYPE MotoUDP::MotoUDP::GetReceiveType (QByteArray buffer)
+MotoUDP::MotoUDP::RECEIVE_TYPE MotoUDP::MotoUDP::GetReceiveType ()
 {
-    return RECEIVE_TYPE(buffer.at(11));
+    return RECEIVE_TYPE(rx_buffer->at(11));
 }
 bool MotoUDP::MotoUDP::CheckReceivedData(QByteArray buffer)
 {

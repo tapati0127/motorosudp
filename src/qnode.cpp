@@ -127,6 +127,18 @@ void QNode::updateInteractiveMarkers(bool visible){
 
 }
 bool QNode::init() {
+  joint_limit_up.push_back(170*M_PI/180);
+  joint_limit_up.push_back(90*M_PI/180);
+  joint_limit_up.push_back(90*M_PI/180);
+  joint_limit_up.push_back(140*M_PI/180);
+  joint_limit_up.push_back(210*M_PI/180);
+  joint_limit_up.push_back(360*M_PI/180);
+  joint_limit_down.push_back(-170*M_PI/180);
+  joint_limit_down.push_back(-85*M_PI/180);
+  joint_limit_down.push_back(-50*M_PI/180);
+  joint_limit_down.push_back(-140*M_PI/180);
+  joint_limit_down.push_back(-30*M_PI/180);
+  joint_limit_down.push_back(-360*M_PI/180);
   std::cout << "Start" << std::endl;
   ros::init(init_argc,init_argv,"motorosudp");
   if ( ! ros::master::check() ) {
@@ -199,10 +211,13 @@ void QNode::run(){
       if(COM.available())
       {
           int size = COM.available();
-          uint8_t buffer[8];
+          uint8_t buffer[24];
           COM.read(buffer,size);
-          memcpy(&velocity,buffer,8);
-          //std::cout << v << std::endl;
+          memcpy(object_position,buffer,24);
+          for (int i=0;i<6;i++) {
+            std::cout << object_position[i] << " ";
+          }
+            std::cout << std::endl;
       }
       ros::spinOnce();
   }
@@ -372,20 +387,26 @@ bool QNode::getJointsPosition(std::vector<double> pos,bool upper_lower,std::vect
 //    double theta4 = atan2(R(1,2),R(0,2));
 //    double theta5 = atan2(sqrt(R(0,2)*R(0,2)+R(1,2)*R(1,2)),R(2,2));
 //    double theta6 = atan2(R(2,1),-R(2,0));
-  std::cout << "KQ" << std::endl;
-  std::cout << theta[0]*180/M_PI << std::endl;
-  std::cout << -(theta[1]-M_PI/2)*180/M_PI << std::endl;
-  std::cout << (theta[2]+M_PI/2)*180/M_PI << std::endl;
-  std::cout << -theta[3]*180/M_PI << std::endl;
-  std::cout << (theta[4]+M_PI/2)*180/M_PI << std::endl;
-  std::cout << -theta[5]*180/M_PI << std::endl;
+//  std::cout << "KQ" << std::endl;
+//  std::cout << theta[0]*180/M_PI << std::endl;
+//  std::cout << -(theta[1]-M_PI/2)*180/M_PI << std::endl;
+//  std::cout << (theta[2]+M_PI/2)*180/M_PI << std::endl;
+//  std::cout << -theta[3]*180/M_PI << std::endl;
+//  std::cout << (theta[4]+M_PI/2)*180/M_PI << std::endl;
+//  std::cout << -theta[5]*180/M_PI << std::endl;
   joints.at(0)=theta[0];
   joints.at(1)=-(theta[1]-M_PI/2);
   joints.at(2) = (theta[2]+M_PI/2);
   joints.at(3)=-theta[3];
   joints.at(4)=(theta[4]+M_PI/2);
   joints.at(5) = -theta[5];
-  return true;
+  if(jointLimit(joints)){
+    return true;
+  }
+  else{
+    return false;
+  }
+
 }
 bool QNode::connectSerial(){
 
@@ -405,15 +426,24 @@ bool QNode::connectSerial(){
   }
   return (COM.isOpen());
 }
-bool QNode::sendFirstDataToSerial(int encodertype, double ratio)
+bool QNode::sendFirstDataToSerial(int encodertype, double ratio,int32_t* pos,uint enable)
 {
-  uint8_t buffer[12];
-  mempcpy(buffer,&encodertype,sizeof(int));
-  mempcpy(buffer+sizeof(int),&ratio,sizeof(double));
+  uint8_t buffer[40];
+
+  mempcpy(buffer,&ratio,sizeof(double));
+  memcpy(buffer+8,pos,4);
+  memcpy(buffer+12,pos+1,4);
+  memcpy(buffer+16,pos+2,4);
+  memcpy(buffer+20,pos+3,4);
+  memcpy(buffer+24,pos+4,4);
+  memcpy(buffer+28,pos+5,4);
+  mempcpy(buffer+32,&encodertype,4);
+  memcpy(buffer+36,&enable,4);
+
   if(COM.isOpen())
   {
       try{
-          std::cout << COM.write(buffer,12) << std::endl;
+          COM.write(buffer,40);
       }
       catch (serial::IOException& e)
       {
@@ -422,7 +452,18 @@ bool QNode::sendFirstDataToSerial(int encodertype, double ratio)
 
   }
 }
-double QNode::getVelocity(){
-  return velocity;
+int32_t* QNode::getObjectPosition(){
+  return object_position;
 }
+bool QNode::jointLimit(std::vector<double> joints){
+  for (int i=0;i<6;i++) {
+    if(joints.at(i)>joint_limit_up.at(i))
+      return false;
+    if(joints.at(i)<joint_limit_down.at(i))
+      return false;
+  }
+  return true;
+
+}
+
 }  // namespace motorosudp

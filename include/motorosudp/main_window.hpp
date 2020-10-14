@@ -65,33 +65,32 @@ public:
   MotoUDP* socket;
  // double current_position[6];
   std::vector <double> current_joints_radian;
+  std::vector <double> current_object_position;
   std::vector <double> current_positions;
+  double distance;
   //int32_t current_pulse[6];
   void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
   void DefaultRealControl();
   void DefaultSimulation();
   void InitObjectPosition();
 
-
-
 public Q_SLOTS:
   void on_pushButtonConnect_clicked();
   void RequestPosition();
   void DataReceiveHandler();
   void SampleHandler();
-  void on_checkBoxReadRobotState_stateChanged(int arg1);
-  void on_pushButtonSERVO_clicked();
-  void on_pushButtonHOME_clicked();
+  void TimeoutHandler();
+
+
   void on_comboBoxCoordinate_currentIndexChanged(int index);
   void on_checkBoxDrawEndPoints_stateChanged(int arg1);
-  void on_pushButtonMOVJ_clicked();
-  void on_pushButtonMOVL_clicked();
-  void on_comboBoxMode_activated(int index);
+
+
+
   void on_pushButton_clicked();
   void sendDataPosition();
   //void on_pushButtonAdd_1_clicked(bool checked);
   void on_pushButton_3_clicked();
-  void on_pushButtonMOVL_2_clicked();
   void on_pushButton_4_clicked();
   void on_pushButton_6_clicked();
   void on_pushButton_5_clicked();
@@ -113,6 +112,7 @@ public Q_SLOTS:
   void on_ChooseObject_Button_clicked();
   void handleButton() ;
   void on_pushButtonConnectSerial_clicked();
+  void on_comboBox_currentIndexChanged(int index);
 
 private:
   Ui::MainWindowDesign* ui;
@@ -120,6 +120,7 @@ private:
   QTimer* timerReal;
   QTimer* timerSimulation;
   QTimer* timerSample;
+  QTimer* timerTimeout;
   bool isCartesianCoordinate;
   bool isSimulation;
   std::vector <QString>* points_list;
@@ -128,6 +129,7 @@ private:
   int index_points;
   int index_step;
   DialogPosition* dialogPosition;
+  double jogspeed;
 
   Capture *mOpenCV_videoCapture;
   bool Find_Mask_Ready = 1;
