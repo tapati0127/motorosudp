@@ -22,7 +22,8 @@ public:
                         ALARM_CLEAR,
                         FILE_TRANSMIT,
                         FILE_RECEIVE,
-                        FILE_DELETE
+                        FILE_DELETE,
+                        WRITE_BYTE
                        };
     ~MotoUDP();
     bool SendData (char* buffer, int lenght);
@@ -37,14 +38,14 @@ public:
     bool StartJob();
     bool WritePosition(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
     bool WritePulse(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
-    bool WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int32_t Z,int32_t RX,int32_t RY,int32_t RZ);
+    bool WriteVarPosition(u_int16_t index, std::vector<int32_t> pos);
     bool FileTransmitCommand(char name[]);
     bool FileReceiveCommand(char name[]);
     bool FileDeleteCommand(char name[]);
     bool GetJobFile(QString path);
     bool JobFile2ByteArray(QString path);
     bool ConnectToPLC(QHostAddress host, u_int port,uint16_t adr,uint16_t no_reg,std::vector<uint16_t> data);
-
+    bool WriteByte(u_int16_t instance, uint8_t data);
     int32_t* GetCurrentPosition();
     int32_t* GetCurrentPulse();
 

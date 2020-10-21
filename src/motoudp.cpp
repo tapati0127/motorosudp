@@ -322,7 +322,7 @@ bool MotoUDP::MotoUDP::GetVarPosition(u_int16_t index)
   SendData(buffer,sizeof (sent_data));
   return true;
 }
-bool MotoUDP::MotoUDP::WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int32_t Z,int32_t RX,int32_t RY,int32_t RZ)
+bool MotoUDP::MotoUDP::WriteVarPosition(u_int16_t index, std::vector<int32_t> pos)
 {
   TxData sent_data;
   sent_data.id = 07;
@@ -333,12 +333,12 @@ bool MotoUDP::MotoUDP::WriteVarPosition(u_int16_t index, int32_t X,int32_t Y,int
   TxDataWriteVariablePosition position;
   sent_data.data_size = sizeof (position);
   position.data_type = 17;
-  position.first_axis_position = X;
-  position.second_axis_position = Y;
-  position.third_axis_position = Z;
-  position.fourth_axis_position = RX;
-  position.fifth_axis_position = RY;
-  position.sixth_axis_position = RZ;
+  position.first_axis_position = pos.at(0);
+  position.second_axis_position = pos.at(1);
+  position.third_axis_position = pos.at(2);
+  position.fourth_axis_position = pos.at(3);
+  position.fifth_axis_position = pos.at(4);
+  position.sixth_axis_position =pos.at(5);
   char buffer[sizeof(sent_data)+ sizeof (position)];
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),&position,sizeof(position));
@@ -610,7 +610,20 @@ bool MotoUDP::MotoUDP::ConnectToPLC(QHostAddress host, u_int port,uint16_t adr,u
       client->writeDatagram(buffer,sizeof(tx_data),host,port);
       return true;
 }
-
+bool MotoUDP::MotoUDP::WriteByte(u_int16_t instance,uint8_t data){
+  TxData sent_data;
+  sent_data.id = RECEIVE_TYPE::WRITE_BYTE;
+  sent_data.command_no = 0x7A;
+  sent_data.instance = instance;
+  sent_data.attribute = 1;
+  sent_data.service = 0x10;
+  sent_data.data_size = sizeof (data);
+  char buffer [sizeof(sent_data)+ sizeof(data)];
+  memcpy(buffer,&sent_data,sizeof (sent_data));
+  memcpy(buffer+sizeof(sent_data),&data,sizeof(data));
+  SendData(buffer,sizeof(sent_data)+sizeof(data));
+  return 1;
+}
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_S = 34816/30;
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_L = 102400/90;
 const double MotoUDP::MotoUDP::PULSE_PER_DEGREE_U = 51200/90;

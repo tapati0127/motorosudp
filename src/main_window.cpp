@@ -16,14 +16,13 @@
 #include "../include/motorosudp/motoudp.h"
 #include "../include/motorosudp/capture.h"
 #include "../include/motorosudp/dialogposition.h"
-
+#include <time.h>
 
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
 
 namespace motorosudp {
-
 using namespace Qt;
 
 /*****************************************************************************
@@ -46,6 +45,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   connect(timerSimulation,SIGNAL(timeout()),this,SLOT(RequestPosition()));
   connect(timerSample,SIGNAL(timeout()),this,SLOT(SampleHandler()));
   connect(timerTimeout,SIGNAL(timeout()),this,SLOT(TimeoutHandler()));
+  connect(&qnode,SIGNAL(dataReceive()),this,SLOT(SerialDataReceive()));
   isCartesianCoordinate = false;
   isSimulation = true;
 
@@ -61,12 +61,14 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
   index_points=0;
   index_step=0;
   jogspeed=1;
-
+  isVarPosition=false;
+  current_object_position.resize(6);
 //##############Frame Capture#############///
 
   mOpenCV_videoCapture = new Capture(this);
 
   QObject::connect(mOpenCV_videoCapture,SIGNAL(newPixmapCaptured_Color()), this, SLOT (handleButton()));
+  QObject::connect(mOpenCV_videoCapture,SIGNAL(foundObject()), this, SLOT (foundObject()));
 
 }
 void motorosudp::MainWindow::TimeoutHandler(){
@@ -84,6 +86,7 @@ void motorosudp::MainWindow::TimeoutHandler(){
   ui->groupBoxsafety->setEnabled(false);
   ui->labelConnectStatus->setText("NOT CONNECTED YET");
   ui->groupBoxJOG->setEnabled(true);
+  timerSample->stop();
 }
 void MainWindow::handleButton()
 {
@@ -101,20 +104,20 @@ MainWindow::~MainWindow() {
   delete ui;
   mOpenCV_videoCapture -> terminate();
 }
-
+void getGlobal(std::vector<double> &a){
+  a = x;
+}
 
 }  // namespace motorosudp
 void motorosudp::MainWindow::RequestPosition()
 {
-  //qDebug() << "Aloha" ;
 
   if(!isSimulation)
   {
-    socket->GetPulsePosition();
-    socket->GetPosition();
+    //socket->GetPulsePosition();
+    //socket->GetPosition();
   }
   else {
-
     if(!isCartesianCoordinate)
     {
       std::vector<double> temp = current_joints_radian;
@@ -233,6 +236,14 @@ void motorosudp::MainWindow::RequestPosition()
         QMessageBox::critical(this,"Error","Outside the joint limit!");
       }
     }
+    if(ui->radioButtonInteractiveMarker->isChecked()){
+      std::vector<double> a;
+      getGlobal(a);
+      //std::cout << a.size() << std::endl;
+      if(a.size()==6){
+        qnode.getJointsPosition(a,true,current_joints_radian);
+      }
+    }
     qnode.publishJoint(current_joints_radian);
     current_positions =  qnode.getROSPosition(current_joints_radian);
     ui->lineEditS->setText(QString::number(current_joints_radian.at(0)*180/M_PI,'f',4)+" deg");
@@ -255,51 +266,33 @@ void motorosudp::MainWindow::RequestPosition()
   }
 }
 
-
 void motorosudp::MainWindow::DataReceiveHandler()
 {
-  timerTimeout->stop();
-  socket->ReceiveData();
-//  if(socket->GetReceiveType()==socket->GET_PULSE)
-//    socket->GetPosition();
-//  else if(socket->GetReceiveType()==socket->GET_POSITION)
-//    socket->GetPulsePosition();
+    timerTimeout->stop();
+    socket->ReceiveData();
+    if(socket->GetReceiveType()==socket->GET_PULSE)
+          {for(int i = 0;i<6;i++) {current_joints_radian.at(i)=socket->Pulse2Joint(*(socket->GetCurrentPulse()+i),i)*M_PI/180;}}
+    current_positions =  qnode.getROSPosition(current_joints_radian);
+    current_positions_int.resize(3);
+    current_positions_int.at(0)=current_positions.at(0)*1000000;
+    current_positions_int.at(1)=current_positions.at(1)*1000000;
+    current_positions_int.at(2)=(current_positions.at(2)-0.143)*1000000;
 
-//    if(socket->GetReceiveType(*socket->Get_rx_buffer())==socket->ON_SERVO||socket->GetReceiveType(*socket->Get_rx_buffer())==socket->OFF_SERVO)
-//    {
-//      if(isReadRobotState)
-//        timer->start(20);
-//    }
-//    if(isReadRobotState)
-//    {
-//      for (int i = 0;i<6;i++) {
-//        current_joints_radian.at(i)=socket->Pulse2Joint(*(socket->GetCurrentPulse()+i),i)*M_PI/180;
-//     }
+  qnode.publishJoint(current_joints_radian);
 
-//      qnode.publishJoint(current_joints_radian);
-//      current_positions =  qnode.getROSPosition(current_joints_radian);
-//      if(ui->checkBoxDrawEndPoints->checkState() == Qt::CheckState::Checked)
-//      {
-//        qnode.publishMarker(current_joints_radian);
-//      }
-//      if(!isCartesianCoordinate)
-//      {
-//        ui->textBrowser1->setText(QString::number(current_joints_radian.at(0)*180/M_PI,'g',4));
-//        ui->textBrowser2->setText(QString::number(current_joints_radian.at(1)*180/M_PI,'g',4));
-//        ui->textBrowser3->setText(QString::number(current_joints_radian.at(2)*180/M_PI,'g',4));
-//        ui->textBrowser4->setText(QString::number(current_joints_radian.at(3)*180/M_PI,'g',4));
-//        ui->textBrowser5->setText(QString::number(current_joints_radian.at(4)*180/M_PI,'g',4));
-//        ui->textBrowser6->setText(QString::number(current_joints_radian.at(5)*180/M_PI,'g',4));
-//      }
-//      else {
-//        ui->textBrowser1->setText(QString::number(current_positions.at(0)*1000));
-//        ui->textBrowser2->setText(QString::number(current_positions.at(1)*1000));
-//        ui->textBrowser3->setText(QString::number(current_positions.at(2)*1000));
-//        ui->textBrowser4->setText(QString::number(current_positions.at(3)*180/M_PI));
-//        ui->textBrowser5->setText(QString::number(current_positions.at(4)*180/M_PI));
-//        ui->textBrowser6->setText(QString::number(current_positions.at(5)*180/M_PI));
-//      }
-    //}
+  ui->lineEditS->setText(QString::number(current_joints_radian.at(0)*180/M_PI,'f',4)+" deg");
+  ui->lineEditL->setText(QString::number(current_joints_radian.at(1)*180/M_PI,'f',4)+" deg");
+  ui->lineEditU->setText(QString::number(current_joints_radian.at(2)*180/M_PI,'f',4)+" deg");
+  ui->lineEditR->setText(QString::number(current_joints_radian.at(3)*180/M_PI,'f',4)+" deg");
+  ui->lineEditB->setText(QString::number(current_joints_radian.at(4)*180/M_PI,'f',4)+" deg");
+  ui->lineEditT->setText(QString::number(current_joints_radian.at(5)*180/M_PI,'f',4)+" deg");
+
+  ui->lineEditX->setText(QString::number(current_positions.at(0)*1000,'f',4)+" mm");
+  ui->lineEditY->setText(QString::number(current_positions.at(1)*1000,'f',4)+" mm");
+  ui->lineEditZ->setText(QString::number(current_positions.at(2)*1000,'f',4)+" mm");
+  ui->lineEditRX->setText(QString::number(current_positions.at(3)*180/M_PI,'f',4)+" deg");
+  ui->lineEditRY->setText(QString::number(current_positions.at(4)*180/M_PI,'f',4)+" deg");
+  ui->lineEditRZ->setText(QString::number(current_positions.at(5)*180/M_PI,'f',4)+" deg");
 }
 void motorosudp::MainWindow::on_pushButtonConnect_clicked()
 {
@@ -310,7 +303,7 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
     ui->labelStatusServo->setEnabled(true);
     ui->groupBoxConveyer->setEnabled(true);
     ui->groupBoxsafety->setEnabled(true);
-    timerReal->start(20);
+    //timerReal->start(20);
     timerSimulation->stop();
     isSimulation=false;
     socket = new MotoUDP(QHostAddress(ui->lineEditrobotAddress->text()),10040);
@@ -319,6 +312,10 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
     ui->labelConnectStatus->setText("CONNECTED SUCCESSFULLY");
     ui->groupBoxJOG->setEnabled(false);
     socket->GetPulsePosition();
+    //socket->GetPosition();
+    timerSample->start(1);
+    mode = 1;
+    time = clock();
     timerTimeout->start(1000);
   }
   else {
@@ -326,8 +323,8 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
     ui->pushButtonServo->setEnabled(false);
     ui->labelStatusServo->setEnabled(false);
     ui->groupBoxConveyer->setEnabled(false);
-    timerSimulation->start(20);
-    timerReal->stop();
+    //timerSimulation->start(20);
+    //timerReal->stop();
     isSimulation=true;
     socket->CloseMotoman();
     delete socket;
@@ -339,27 +336,10 @@ void motorosudp::MainWindow::on_pushButtonConnect_clicked()
 
 void motorosudp::MainWindow::on_comboBoxCoordinate_currentIndexChanged(int index)
 {
+  timerSimulation->stop();
   if(index==1)
   {
     isCartesianCoordinate = true;
-//    ui->label1->setText("X");
-//    ui->label2->setText("Y");
-//    ui->label3->setText("Z");
-//    ui->label4->setText("RX");
-//    ui->label5->setText("RY");
-//    ui->label6->setText("RZ");
-//    ui->label1_2->setText("mm");
-//    ui->label2_2->setText("mm");
-//    ui->label3_2->setText("mm");
-//    ui->label1_3->setText("X");
-//    ui->label2_3->setText("Y");
-//    ui->label3_3->setText("Z");
-//    ui->label4_3->setText("RX");
-//    ui->label5_3->setText("RY");
-//    ui->label6_3->setText("RZ");
-//    ui->label1_4->setText("mm");
-//    ui->label2_4->setText("mm");
-//    ui->label3_4->setText("mm");
     ui->pushButtonAdd_1->setText("X+");
     ui->pushButtonSubb_1->setText("X-");
     ui->pushButtonAdd_2->setText("Y+");
@@ -375,24 +355,6 @@ void motorosudp::MainWindow::on_comboBoxCoordinate_currentIndexChanged(int index
   }
   else {
     isCartesianCoordinate = false;
-//    ui->label1->setText("S");
-//    ui->label2->setText("L");
-//    ui->label3->setText("U");
-//    ui->label4->setText("R");
-//    ui->label5->setText("B");
-//    ui->label6->setText("T");
-//    ui->label1_2->setText("degree");
-//    ui->label2_2->setText("degree");
-//    ui->label3_2->setText("degree");
-//    ui->label1_3->setText("S");
-//    ui->label2_3->setText("L");
-//    ui->label3_3->setText("U");
-//    ui->label4_3->setText("R");
-//    ui->label5_3->setText("B");
-//    ui->label6_3->setText("T");
-//    ui->label1_4->setText("degree");
-//    ui->label2_4->setText("degree");
-//    ui->label3_4->setText("degree");
     ui->pushButtonAdd_1->setText("S+");
     ui->pushButtonSubb_1->setText("S-");
     ui->pushButtonAdd_2->setText("L+");
@@ -406,13 +368,14 @@ void motorosudp::MainWindow::on_comboBoxCoordinate_currentIndexChanged(int index
     ui->pushButtonAdd_6->setText("T+");
     ui->pushButtonSubb_6->setText("T-");
   }
+  timerSimulation->start(20);
 }
 
 void motorosudp::MainWindow::on_checkBoxDrawEndPoints_stateChanged(int arg1)
 {
     if(arg1 != 2)
     {
-      qnode.deleteMarker();
+      qnode.deleteAllMarker();
     }
 }
 
@@ -467,7 +430,7 @@ void motorosudp::MainWindow::GetPositionandMove(u_int16_t type, u_int32_t class_
 
 void motorosudp::MainWindow::on_pushButton_clicked()
 {
-  qnode.updateInteractiveMarkers(true);
+  //qnode.updateInteractiveMarkers(true);
   //qnode.publishPosition();
 //    ui->textEdit1->setText(ui->textBrowser1->toPlainText());
 //    ui->textEdit2->setText(ui->textBrowser2->toPlainText());
@@ -578,25 +541,29 @@ void motorosudp::MainWindow::on_pushButtonAddPoint_clicked()
 {
     points_list->push_back("C"+QString::number(index_points));
     points_value->push_back(current_joints_radian);
-    ui->listWidgetPoints->addItem("C"+QString::number(index_points));
+    QString a = "C"+QString::number(index_points);
+    ui->listWidgetPoints->addItem(a);
     std::cout << "C" << index_points;
     for (int i = 0;i<6;i++) {
       std::cout << " " << current_joints_radian.at(i);
     }
     std::cout << std::endl;
+    qnode.publishPose(current_joints_radian,index_points*3,0.05);
+    qnode.publishText(current_joints_radian,index_points*3+30000,a.toStdString());
     index_points++;
 }
 
 void motorosudp::MainWindow::on_pushButtonRemovePoint_clicked()
 {
-  //std::cout << ui->listWidgetPoints->currentRow() << std::endl;
-  if(ui->listWidgetPoints->currentRow()!=-1)
+  int i = ui->listWidgetPoints->currentRow();
+  if(i!=-1)
   {
-    points_list->erase(points_list->begin()+ui->listWidgetPoints->currentRow());
-    points_value->erase(points_value->begin()+ui->listWidgetPoints->currentRow());
-    ui->listWidgetPoints->takeItem(ui->listWidgetPoints->currentRow());
+    qnode.delete3Marker(3*i);
+    qnode.deleteMarker(3*i+30000);
+    points_list->erase(points_list->begin()+i);
+    points_value->erase(points_value->begin()+i);
+    ui->listWidgetPoints->takeItem(i);
   }
-
 }
 
 void motorosudp::MainWindow::on_pushButtonCheckPoint_clicked()
@@ -606,11 +573,23 @@ void motorosudp::MainWindow::on_pushButtonCheckPoint_clicked()
 
 void motorosudp::MainWindow::on_pushButtonModifyPoint_clicked()
 {
-    dialogPosition = new DialogPosition();
-    dialogPosition->show();
+
+  int i = ui->listWidgetPoints->currentRow();
+  if(i!=-1)
+  {
+    DialogPosition a;
+    a.getJoints(points_value->at(i));
+    a.exec();
+    qDebug() << "before export";
+    a.exportJoints(points_value->at(i));
+    qDebug() << "exported";
+    qnode.publishPose(points_value->at(i),i*3,0.05);
+    QString b = "C"+QString::number(i);
+    qnode.publishText(points_value->at(i),i*3+30000,b.toStdString());
+  }
+
+
 }
-
-
 
 void motorosudp::MainWindow::on_CameraOn_Button_clicked()
 {
@@ -722,36 +701,69 @@ void motorosudp::MainWindow::on_Size_Button_clicked()
 
 void motorosudp::MainWindow::on_pushButtonConnectSerial_clicked()
 {
-  if(qnode.connectSerial()){
-    int32_t pos[6];
-//    if(mOpenCV_videoCapture->Found_Object_Mid){
-//      memcpy(pos,&mOpenCV_videoCapture->x_robot,4);
-//      memcpy(pos+1,&mOpenCV_videoCapture->y_robot,4);
-//      memcpy(pos+2,&mOpenCV_videoCapture->y_robot,4);
-//      memcpy(pos+3,&mOpenCV_videoCapture->Rx,4);
-//      memcpy(pos+4,&mOpenCV_videoCapture->Ry,4);
-//      memcpy(pos+5,&mOpenCV_videoCapture->Rz,4);
-//    }
-    ui->labelSerialStatus->setText("Connected");
-    qnode.sendFirstDataToSerial(ui->spinBoxEncoderType->value(),ui->doubleSpinBoxRatio->value(),pos,false);
-    timerSample->start(ui->spinBoxSampleTime->value());
+  if(!qnode.connectSerial()){
+    QMessageBox::critical(this,"Error","Can not connect to serial");
+
   }
   else{
-    QMessageBox::critical(this,"Error","Can not connect to serial");
+    ui->labelSerialStatus->setText("Connected");
+    isVarPosition=false;
+    int pos[6]={0,0,0,0,0,0};
+    qnode.sendFirstDataToSerial(ui->spinBoxEncoderType->value(),ui->doubleSpinBoxRatio->value(),pos,false);
   }
 }
 void motorosudp::MainWindow::SampleHandler(){
-  current_object_position.clear();
-  for (int i=0;i<6;i++) {
-     current_object_position.push_back(*(qnode.getObjectPosition()+i));
-  }
-  ui->lineEditX_2->setText(QString::number(*qnode.getObjectPosition()));
-  ui->lineEditY_2->setText(QString::number(*(qnode.getObjectPosition()+1)));
-  ui->lineEditZ_2->setText(QString::number(*(qnode.getObjectPosition()+2)));
-  ui->lineEditRX_2->setText(QString::number(*(qnode.getObjectPosition()+3)));
-  ui->lineEditRY_2->setText(QString::number(*(qnode.getObjectPosition()+4)));
-  ui->lineEditRZ_2->setText(QString::number(*(qnode.getObjectPosition()+5)));
+  timerSample->stop();
+  switch(mode){
+  case 1:
+    if(isVarPosition){
+      for (int i=0;i<6;i++) {
+      current_object_position.at(i)=(*(qnode.getObjectPosition()+i));}
+    socket->WriteVarPosition(32,current_object_position);
+    std::cout << "Write Var: " << current_object_position.at(0) << " "
+                                << current_object_position.at(1) << " "
+                                << current_object_position.at(2) << " "
+                                   << current_object_position.at(3) << " "
+                                      << current_object_position.at(4) << " "
+                                      << current_object_position.at(5) << std::endl;
+    }
+    timerSample->start(15);
+    mode=2;
+    break;
+  case 2:
+    if(isVarPosition){
+    distance = sqrt(pow(current_positions_int.at(0)-current_object_position.at(0),2)+
+               pow(current_positions_int.at(1)-current_object_position.at(1),2)+
+               pow(current_positions_int.at(2)-current_object_position.at(2),2));
+    ui->lineEditDistance->setText(QString::number(distance));
+    if(distance<5000) {
+      socket->WriteByte(33,1);
+      std::cout << "Picking" << std::endl;
+      timerSample->start(15);
+      //qnode.sendFirstDataToSerial(0,0,current_object_position,true);
+    }
+    else if(current_positions_int.at(1)>-100000)
+    {
+        socket->WriteByte(32,1);
+        timerSample->start(15);
+      std::cout << "Start tracking" << std::endl;
+    }
+    else{
+      std::cout << "GetPulse" << std::endl;
+      socket->GetPulsePosition();
+      timerSample->start(2);
+    }
+    }
+    else
+    {
+      std::cout << "GetPulse" << std::endl;
+      socket->GetPulsePosition();
+      timerSample->start(2);
 
+    }
+    mode=1;
+    break;
+  }
 }
 
 void motorosudp::MainWindow::on_comboBox_currentIndexChanged(int index)
@@ -770,3 +782,96 @@ void motorosudp::MainWindow::on_comboBox_currentIndexChanged(int index)
     }
 
 }
+
+void motorosudp::MainWindow::on_pushButton_2_clicked()
+{
+//  if(qnode.connectSerial()){
+//    int32_t pos[6]={242616,-212142,-118000,1765121,60327,-389827};
+//    ui->labelSerialStatus->setText("Disconnected");
+//    qnode.sendFirstDataToSerial(ui->spinBoxEncoderType->value(),ui->doubleSpinBoxRatio->value(),pos,false);
+//    //timerSample->start(ui->spinBoxSampleTime->value());
+//  }
+//  else{
+//    QMessageBox::critical(this,"Error","Can not connect to serial");
+//  }
+//  std::vector<uint16_t> data;
+//  data.push_back(0);
+//  socket->ConnectToPLC(QHostAddress("192.168.1.144"),10001,1,1,data);
+  isVarPosition=false;
+}
+void motorosudp::MainWindow::SerialDataReceive(){
+ // isVarPosition=true;
+  int32_t posi[6];
+  memcpy(posi,qnode.getObjectPosition(),sizeof(posi));
+  if(posi[2]>105000){
+    qnode.sendFirstDataToSerial(0,0,posi,false);
+    isVarPosition=false;
+  }
+  ui->lineEditX_2->setText(QString::number(posi[0]));
+  ui->lineEditY_2->setText(QString::number(posi[1]));
+  ui->lineEditZ_2->setText(QString::number(posi[2]));
+  ui->lineEditRX_2->setText(QString::number(posi[3]));
+  ui->lineEditRY_2->setText(QString::number(posi[4]));
+  ui->lineEditRZ_2->setText(QString::number(posi[5]));
+  //socket->WriteVarPosition(32,*qnode.getObjectPosition(),*(qnode.getObjectPosition()+1),*(qnode.getObjectPosition()+2),*(qnode.getObjectPosition()+3),*(qnode.getObjectPosition()+4),*(qnode.getObjectPosition()+5));
+}
+
+void motorosudp::MainWindow::on_pushButtonStartConveyer_clicked()
+{
+  std::vector<uint16_t> data;
+  data.push_back(1);
+  socket->ConnectToPLC(QHostAddress("192.168.1.144"),10001,1,1,data);
+}
+
+void motorosudp::MainWindow::on_pushButton_12_clicked()
+{
+  std::vector<uint16_t> data;
+  data.push_back(0);
+  socket->ConnectToPLC(QHostAddress("192.168.1.144"),10001,1,1,data);
+}
+void motorosudp::MainWindow::foundObject(){
+  float pose[6];
+  int pos[6];
+  memcpy(pose,&mOpenCV_videoCapture->x_robot,4);
+  memcpy(pose+1,&mOpenCV_videoCapture->y_robot,4);
+  memcpy(pose+2,&mOpenCV_videoCapture->z_robot,4);
+  memcpy(pose+3,&mOpenCV_videoCapture->Rx,4);
+  memcpy(pose+4,&mOpenCV_videoCapture->Ry,4);
+  memcpy(pose+5,&mOpenCV_videoCapture->Rz,4);
+  for(int i=0;i<3;i++){
+     pos[i]=pose[i]*1000;
+  }
+  pos[2]+=6500;
+  for(int i=3;i<6;i++){
+     pos[i]=pose[i]*10000;
+  }
+  if(qnode.COM.isOpen()){
+      qnode.sendFirstDataToSerial(ui->spinBoxEncoderType->value(),(ui->doubleSpinBoxRatio->value())*1000,pos,true);
+      isVarPosition=true;
+      isFirstByte=true;
+      std::cout << "CV Found object" << std::endl;
+    }
+}
+
+
+void motorosudp::MainWindow::on_radioButtonInteractiveMarker_clicked(bool checked)
+{
+  if(checked)
+  {
+    qnode.updateInteractiveMarkers(current_joints_radian);
+  }
+  else{
+    qnode.deleteInteractiveMarkers();
+  }
+}
+
+
+void motorosudp::MainWindow::on_pushButtonHoming_clicked()
+{
+  if(isSimulation){
+    for(int i=0;i<current_joints_radian.size();i++)
+    current_joints_radian.at(i)=0;
+  }
+}
+
+

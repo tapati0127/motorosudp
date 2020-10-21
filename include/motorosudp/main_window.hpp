@@ -18,7 +18,7 @@
 #include "motoudp.h"
 #include "capture.h"
 #include "dialogposition.h"
-
+#include <time.h>
 #include <QTimer>
 #include <QRubberBand>
 #include <QSizeGrip>
@@ -45,7 +45,7 @@ private:
 /*****************************************************************************
 ** Namespace
 *****************************************************************************/
-
+extern std::vector<double> x;
 namespace motorosudp {
 
 /*****************************************************************************
@@ -65,7 +65,8 @@ public:
   MotoUDP* socket;
  // double current_position[6];
   std::vector <double> current_joints_radian;
-  std::vector <double> current_object_position;
+  std::vector <int> current_object_position;
+  std::vector <int> current_positions_int;
   std::vector <double> current_positions;
   double distance;
   //int32_t current_pulse[6];
@@ -80,8 +81,8 @@ public Q_SLOTS:
   void DataReceiveHandler();
   void SampleHandler();
   void TimeoutHandler();
-
-
+  void SerialDataReceive();
+  void foundObject();
   void on_comboBoxCoordinate_currentIndexChanged(int index);
   void on_checkBoxDrawEndPoints_stateChanged(int arg1);
 
@@ -113,6 +114,11 @@ public Q_SLOTS:
   void handleButton() ;
   void on_pushButtonConnectSerial_clicked();
   void on_comboBox_currentIndexChanged(int index);
+  void on_pushButton_2_clicked();
+  void on_pushButtonStartConveyer_clicked();
+  void on_pushButton_12_clicked();
+  void on_radioButtonInteractiveMarker_clicked(bool checked);
+  void on_pushButtonHoming_clicked();
 
 private:
   Ui::MainWindowDesign* ui;
@@ -128,15 +134,16 @@ private:
   std::vector <std::vector<double>> *points_value;
   int index_points;
   int index_step;
-  DialogPosition* dialogPosition;
+  //DialogPosition* dialogPosition;
   double jogspeed;
-
+  bool isVarPosition;
   Capture *mOpenCV_videoCapture;
   bool Find_Mask_Ready = 1;
   Resizable_rubber_band *band;
-
-
-
+  uint64 time;
+  bool isFirstVar;
+  bool isFirstByte;
+  uint mode;
 
 };
 

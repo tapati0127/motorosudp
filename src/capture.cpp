@@ -92,7 +92,7 @@ void labelBlobs(const cv::Mat gray, std::vector < std::vector<cv::Point> > &blob
                     blob.push_back(cv::Point(j,i));
                 }
             }
-            if (blob.size() > 800)
+            if ((blob.size() > 1000)&&(blob.size() <10000))
                 blobs.push_back(blob);
 
             label_count++;
@@ -191,7 +191,7 @@ void Tranfer_CorRobot(float x_cam, float y_cam, float z_cam,
       y_robot = C[1][0];
       z_robot = C[2][0];
 }
-void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < std::vector<cv::Point> > blobs,
+void Capture::detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < std::vector<cv::Point> > blobs,
                              size_t &numberblob,rs2::depth_frame depth, bool Mearsure_Ready,
                              float &x_robot, float &y_robot, float &z_robot, bool &Found_Object,bool &Found_Object_Mid,
                              float &Rx, float &Ry, float &Rz)
@@ -204,7 +204,7 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     cv::Mat MaskGray;
     cv::cvtColor(Mask,MaskGray,cv::COLOR_BGR2GRAY);
 
-    if (blobs.empty()) Found_Object = 0; else Found_Object = 1;
+    //#########################################//
     if (!blobs.empty())
     {
         if (numberblob >= blobs.size()) {numberblob = 0;}
@@ -242,9 +242,14 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     Frame_Draw = m_Frame;
 
 
-    cv::drawContours( Frame_Draw, cnts, largest_contour_index, cv::Scalar(0, 0, 255), 2 );
+    //cv::drawContours( Frame_Draw, cnts, largest_contour_index, cv::Scalar(0, 0, 255), 2 );
     marker = cv::minAreaRect(cnts[largest_contour_index]);
     cv::boxPoints(marker,boxPts);
+    cv::Point2f rect_points[4];
+    marker.points(rect_points);
+    for(int i = 0; i <4; i++)
+        cv::line(Frame_Draw,rect_points[i],rect_points[(i+1)%4],cv::Scalar(0, 0, 255) );
+
     //in bottom-left,top-left, top-right, bottom-right
     cv::reduce(boxPts, mean, 0, cv::REDUCE_AVG);
     cv::Point2f center(mean.at<float>(0,0), mean.at<float>(0,1));
@@ -307,8 +312,14 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
 
     Tranfer_CorRobot(x_cam*1000, y_cam*1000, z_cam*1000, x_robot,y_robot,z_robot);
     //Set signal for Robot
-    if(y_robot >= -265) Found_Object_Mid = 1; else Found_Object_Mid = 0;
-    //std::cout << "x : " << x_robot << " " << "y : " << y_robot<< " " << "z : " << z_robot<< " " << "Rz : " << Rz<< std::endl;
+    if(y_robot >= -212) {
+      bool temp = 1;
+      if(temp!=Found_Object_Mid)
+        Q_EMIT foundObject();
+      Found_Object_Mid = temp;
+    }
+    else Found_Object_Mid = 0;
+
     //String
     char text[200];
 
@@ -320,6 +331,7 @@ void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < 
     cv::putText(Frame_Draw, text,
         cv::Point(Frame_Draw.size[1] - 250, Frame_Draw.size[0] - 20), cv::FONT_HERSHEY_SIMPLEX,
         0.65, cv::Scalar(0, 255, 0), 2);
+    //std::cout << this->x_robot << " " << this->y_robot << " " << this->z_robot << std::endl;
     }
     }
 }

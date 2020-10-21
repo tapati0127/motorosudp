@@ -19,6 +19,10 @@ public:
     {
         return mPixmap_Color ;
     }
+    void detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::vector < std::vector<cv::Point> > blobs,
+                                 size_t &numberblob,rs2::depth_frame depth, bool Mearsure_Ready,
+                                 float &x_robot, float &y_robot, float &z_robot, bool &Found_Object,bool &Found_Object_Mid,
+                                 float &Rx, float &Ry, float &Rz);
     // Declare RealSense pipeline, encapsulating the actual device and sensors
     rs2::pipeline pipe;
     bool StreamOption =0, Mearsure_Ready = 0;
@@ -32,6 +36,7 @@ public:
 
 Q_SIGNALS:
     void newPixmapCaptured_Color();
+    void foundObject();
 protected:
     void run() override;
 private:

@@ -51,17 +51,26 @@ public:
   void run();
   void publishJoint(std::vector<double> joints);
   void publishMarker(std::vector<double> joints);
+  void publishPose(std::vector<double> joints,int id,double lenght);
+  void delete3Marker(int id);
+  void deleteMarker(int id);
+  void publishText(std::vector<double> joints,int id,std::string text);
   void publishPosition();
-  void deleteMarker();
+  void deleteAllMarker();
   std::vector<double> getROSPosition(std::vector<double> joints);
   bool getJointsPosition(std::vector<double> pos,bool upper_lower,std::vector<double> &joints);
-  void updateInteractiveMarkers(bool visible);
+  void updateInteractiveMarkers(std::vector<double> joints);
+  void deleteInteractiveMarkers();
   bool connectSerial();
   bool sendFirstDataToSerial(int encodertype, double ratio,int32_t* pos,uint enable);
   int32_t* getObjectPosition();
   bool jointLimit(std::vector<double> joints);
+  serial::Serial COM;
+
 Q_SIGNALS:
   void rosShutdown();
+  void dataReceive();
+  void interactiveSignal(std::vector<double>pos);
 
 private:
 	int init_argc;
@@ -70,6 +79,7 @@ private:
   ros::Publisher marker_publisher;
   ros::Publisher interactive_publisher;
   ros::Publisher position_publisher;
+  ros::Publisher pose_publisher;
   ros::ServiceClient client;
   moveit_msgs::DisplayRobotState robot_state;
   visualization_msgs::Marker marker;
@@ -79,10 +89,11 @@ private:
   const moveit::core::JointModelGroup* motomini_model_group_ptr;
   geometry_msgs::Pose position;
   interactive_markers::InteractiveMarkerServer* server;
-  serial::Serial COM;
+
   int32_t object_position[6];
   std::vector<double> joint_limit_up;
   std::vector<double> joint_limit_down;
+
 //  interactive_markers::InteractiveMarkerServer server;
 
 
