@@ -42,7 +42,7 @@ cv::Mat Background_Subtraction(cv::Mat Frame, cv::Mat BackgroundMat, cv::Mat Mas
     float threshold = sum/cnt ;
 
     //std::cout << "threshold = " << threshold << std::endl;
-    if (threshold <12)  threshold = 12;
+    if (threshold <20)  threshold = 20;
 
 
     //cv::Mat AfThreshold = Subtraction(cv::Rect(TL,BR));
@@ -92,7 +92,7 @@ void labelBlobs(const cv::Mat gray, std::vector < std::vector<cv::Point> > &blob
                     blob.push_back(cv::Point(j,i));
                 }
             }
-            if ((blob.size() > 1000)&&(blob.size() <10000))
+            if ((blob.size() > 5000)&&(blob.size() <8000))
                 blobs.push_back(blob);
 
             label_count++;
@@ -312,7 +312,7 @@ void Capture::detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::
 
     Tranfer_CorRobot(x_cam*1000, y_cam*1000, z_cam*1000, x_robot,y_robot,z_robot);
     //Set signal for Robot
-    if(y_robot >= -212) {
+    if(y_robot >= -230) {
       bool temp = 1;
       if(temp!=Found_Object_Mid)
         Q_EMIT foundObject();

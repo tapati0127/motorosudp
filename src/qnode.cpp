@@ -327,6 +327,7 @@ bool QNode::init() {
   marker.color.r = 0.0;
   marker.color.g = 1.0;
   marker.color.b = 0.0;
+  marker.id=-1;
   //vis_pub.publish( marker );
 
 
@@ -375,7 +376,8 @@ void QNode::publishMarker(std::vector<double> joints)
 {
   motomini_state_ptr->setJointGroupPositions ("motomini_arm", joints);
   tf::poseEigenToMsg(motomini_state_ptr->getGlobalLinkTransform("tool0"),pose);
-  marker.id += 1;
+  if(marker.id==-2147483648) marker.id=-1;
+  marker.id--;
   marker.pose.position.x = pose.position.x;
   marker.pose.position.y = pose.position.y;
   marker.pose.position.z = pose.position.z;
@@ -387,9 +389,13 @@ void QNode::publishMarker(std::vector<double> joints)
 
 void QNode::deleteAllMarker()
 {
-  marker.id = 0;
   marker.action = visualization_msgs::Marker::DELETEALL;
   marker_publisher.publish(marker);
+//  for(int i=-1;i>=marker.id;i--){
+
+//    std::cout << i << std::endl;
+//  }
+  marker.id=-1;
   ROS_INFO("Deleted all marker!!!");
 }
 std::vector<double> QNode::getROSPosition(std::vector<double> joints)
@@ -522,6 +528,60 @@ void QNode::publishPose(std::vector<double> joints,int id,double lenght){
 //    for (int i=0;i<3;i++) {
 //      std::cout <<"Publish marker: "<< id+i << std::endl;
 //    };
+}
+void QNode::publishPose(std::vector<double> pos,int id){
+  tf2::Quaternion myQuaternion;
+  myQuaternion.setRPY(pos.at(3),pos.at(4),pos.at(5));
+  geometry_msgs::Pose m;
+  m.position.x=pos.at(0);
+  m.position.y=pos.at(1);
+  m.position.z=pos.at(2);
+  m.orientation.x=myQuaternion.getX();
+  m.orientation.y=myQuaternion.getY();
+  m.orientation.z=myQuaternion.getZ();
+  m.orientation.w=myQuaternion.getW();
+  Eigen::Affine3d pose;
+  tf::poseMsgToEigen(m,pose);
+
+  visualization_msgs::Marker marker;
+  marker.header.frame_id = "base_link";
+  marker.header.stamp = ros::Time();
+  marker.type = visualization_msgs::Marker::CYLINDER;
+  marker.scale.x = 0.005;
+  marker.scale.y = 0.005;
+  marker.scale.z = 0.05;
+  marker.color.a = 1.0; // Don't forget to set the alpha!
+  marker.action = visualization_msgs::Marker::ADD;
+
+  // Publish x axis
+    Eigen::Affine3d x_pose =
+    Eigen::Translation3d(0.05 / 2.0, 0, 0) * Eigen::AngleAxisd(M_PI / 2.0, Eigen::Vector3d::UnitY());
+    x_pose = pose * x_pose;
+    marker.id = id;
+    tf::poseEigenToMsg(x_pose,marker.pose);
+    marker.color.r = 1.0;
+    marker.color.g = 0.0;
+    marker.color.b = 0.0;
+    marker_publisher.publish(marker);
+    // Publish y axis
+    Eigen::Affine3d y_pose =
+       Eigen::Translation3d(0, 0.05 / 2.0, 0) * Eigen::AngleAxisd(M_PI / 2.0, Eigen::Vector3d::UnitX());
+     y_pose = pose * y_pose;
+     marker.id = id+1;
+     tf::poseEigenToMsg(y_pose,marker.pose);
+     marker.color.r = 0.0;
+     marker.color.g = 1.0;
+     marker.color.b = 0.0;
+     marker_publisher.publish(marker);
+    // Publish z axis
+    Eigen::Affine3d z_pose = Eigen::Translation3d(0, 0, 0.05 / 2.0) * Eigen::AngleAxisd(0, Eigen::Vector3d::UnitZ());
+    z_pose = pose * z_pose;
+    marker.id = id+2;
+    tf::poseEigenToMsg(z_pose,marker.pose);
+    marker.color.r = 0.0;
+    marker.color.g = 0.0;
+    marker.color.b = 1.0;
+    marker_publisher.publish(marker);
 }
 void QNode::delete3Marker(int id){
   visualization_msgs::Marker marker;

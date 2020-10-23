@@ -391,12 +391,16 @@ void MotoUDP::MotoUDP::ReceiveData()
       memcpy(current_pulse,rx_buffer->data()+52,24);
     }
     else if (GetReceiveType() == FILE_RECEIVE && rx_buffer->at(26)==0) {
+       TxData header;
+       memcpy(&header,rx_buffer,32);
       for (int i = 32;i<rx_buffer->size();i++) {
         rx_file_buffer->push_back(rx_buffer->at(i));
 //        qDebug() << rx_buffer->toHex();
       }
-      TxData header;
-      memcpy(&header,rx_buffer,32);
+      if(header.block_no-previous!=1){
+        Q_EMIT receiveAllData();
+      }
+      previous=header.block_no;
       header.command_no = 0;
       header.instance = 0;
       header.attribute = 0;
@@ -428,10 +432,12 @@ void MotoUDP::MotoUDP::ReceiveData()
         byte_number = last_byte_number;
         header.block_no = index_file_transmit+0x80000000;
         last_data = true;
+        Q_EMIT transferAllData();
       }
       header.data_size = byte_number;
       memcpy(data,&header,32);
       memcpy(data+32,tx_file_buffer->data()+(index_file_transmit-1)*32,byte_number);
+
 //      for (int i = 0;i<32+byte_number;i++) {
 //        qDebug() <<(data[i]);
 //      }
@@ -442,7 +448,7 @@ void MotoUDP::MotoUDP::ReceiveData()
     //rx_data = ByteArray2Hex(*rx_buffer);
     //isDataReceive = true;
 }
-bool MotoUDP::MotoUDP::FileReceiveCommand(char name[]){
+bool MotoUDP::MotoUDP::FileReceiveCommand(char name[],int length){
   TxData sent_data;
   sent_data.id = RECEIVE_TYPE::FILE_RECEIVE;
   sent_data.processing_division = 2;
@@ -450,15 +456,15 @@ bool MotoUDP::MotoUDP::FileReceiveCommand(char name[]){
   sent_data.instance = 0;
   sent_data.attribute = 0;
   sent_data.service = 0x16;
-  sent_data.data_size = 12;//
-  char buffer[64];//
+  sent_data.data_size = length;//
+  char buffer[32+length];//
   memcpy(buffer,&sent_data,sizeof (sent_data));
-  memcpy(buffer+sizeof(sent_data),name,12);//
-
-  client->writeDatagram(buffer,32+12,_HostAddress,_port+1);
+  memcpy(buffer+sizeof(sent_data),name,length);
+  client->writeDatagram(buffer,32+length,_HostAddress,_port+1);
   rx_file_buffer->resize(0);
+  previous=0;
 }
-bool MotoUDP::MotoUDP::FileTransmitCommand(char name[]){
+bool MotoUDP::MotoUDP::FileTransmitCommand(char name[],int length){
   TxData sent_data;
   sent_data.id = RECEIVE_TYPE::FILE_TRANSMIT;
   sent_data.processing_division = 2;
@@ -466,11 +472,12 @@ bool MotoUDP::MotoUDP::FileTransmitCommand(char name[]){
   sent_data.instance = 0;
   sent_data.attribute = 0;
   sent_data.service = 0x15;
-  sent_data.data_size = 13;//
-  char buffer[64];//
+  sent_data.data_size = length;
+
+  char buffer[32+length];//
   memcpy(buffer,&sent_data,sizeof (sent_data));
-  memcpy(buffer+sizeof(sent_data),name,13);//
-  client->writeDatagram(buffer,32+13,_HostAddress,_port+1);//
+  memcpy(buffer+sizeof(sent_data),name,length);//
+  client->writeDatagram(buffer,32+length,_HostAddress,_port+1);//
   max_index_file_transmit = tx_file_buffer->size()/32;
   if(tx_file_buffer->size()%32!=0)
   {
@@ -480,7 +487,7 @@ bool MotoUDP::MotoUDP::FileTransmitCommand(char name[]){
   index_file_transmit = 0;
   last_data = false;
 }
-bool MotoUDP::MotoUDP::FileDeleteCommand(char name[]){
+bool MotoUDP::MotoUDP::FileDeleteCommand(char name[],int length){
   TxData sent_data;
   sent_data.id = RECEIVE_TYPE::FILE_DELETE;
   sent_data.processing_division = 2;
@@ -489,17 +496,21 @@ bool MotoUDP::MotoUDP::FileDeleteCommand(char name[]){
   sent_data.attribute = 0;
   sent_data.service = 0x9;
   sent_data.data_size = 13;//
-  char buffer[64];//
+  char buffer[32+length];//
   memcpy(buffer,&sent_data,sizeof (sent_data));
-  memcpy(buffer+sizeof(sent_data),name,13);//
-  client->writeDatagram(buffer,32+13,_HostAddress,_port+1);//
+  memcpy(buffer+sizeof(sent_data),name,length);//
+  client->writeDatagram(buffer,32+length,_HostAddress,_port+1);//
 }
 bool MotoUDP::MotoUDP::GetJobFile(QString path){
   //"/home/tapati/motoman_ws/src/motorosudp/TEST0407.JBI"
   QFile file(path);
-  file.open(QIODevice::ReadWrite);
-  file.write(*rx_file_buffer);
-  file.close();
+  if(file.open(QIODevice::ReadWrite)){
+    file.write(*rx_file_buffer);
+    file.close();
+    return true;
+  }
+  return false;
+
 }
 bool MotoUDP::MotoUDP::JobFile2ByteArray(QString path)
 {

@@ -52,6 +52,7 @@ public:
   void publishJoint(std::vector<double> joints);
   void publishMarker(std::vector<double> joints);
   void publishPose(std::vector<double> joints,int id,double lenght);
+  void publishPose(std::vector<double> pos,int id);
   void delete3Marker(int id);
   void deleteMarker(int id);
   void publishText(std::vector<double> joints,int id,std::string text);

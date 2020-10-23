@@ -68,12 +68,14 @@ public:
   std::vector <int> current_object_position;
   std::vector <int> current_positions_int;
   std::vector <double> current_positions;
+  std::vector <double> pre_current_joints_radian;
   double distance;
   //int32_t current_pulse[6];
   void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
   void DefaultRealControl();
   void DefaultSimulation();
   void InitObjectPosition();
+  void catesianCaculate(std::vector<double>tem);
 
 public Q_SLOTS:
   void on_pushButtonConnect_clicked();
@@ -83,6 +85,9 @@ public Q_SLOTS:
   void TimeoutHandler();
   void SerialDataReceive();
   void foundObject();
+  void fileReceiveDone();
+  void fileTransmitDone();
+  void deleteFile();
   void on_comboBoxCoordinate_currentIndexChanged(int index);
   void on_checkBoxDrawEndPoints_stateChanged(int arg1);
 
@@ -119,6 +124,14 @@ public Q_SLOTS:
   void on_pushButton_12_clicked();
   void on_radioButtonInteractiveMarker_clicked(bool checked);
   void on_pushButtonHoming_clicked();
+  void on_pushButtonServoHoming_clicked();
+  void on_pushButtonStartProgram_clicked();
+  void on_pushButtonStopProgram_clicked();
+  void on_pushButtonGetJobFile_clicked();
+  void on_pushButtonOpenJOB_clicked();
+  void on_pushButtonSendJOB_clicked();
+  void on_pushButtonServo_clicked();
+  void on_checkBoxTrajectory_stateChanged(int arg1);
 
 private:
   Ui::MainWindowDesign* ui;
@@ -144,6 +157,9 @@ private:
   bool isFirstVar;
   bool isFirstByte;
   uint mode;
+  bool isBlock;
+  int id;
+  bool isPublishMarker;
 
 };
 

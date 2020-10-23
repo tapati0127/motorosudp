@@ -5,7 +5,7 @@
 
 class MotoUDP : public QObject
 {
-
+Q_OBJECT
 public:
     MotoUDP(QHostAddress h,quint16 p);
     enum RECEIVE_TYPE  {ON_SERVO = 0x00,
@@ -39,9 +39,9 @@ public:
     bool WritePosition(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
     bool WritePulse(u_int16_t type,u_int32_t classification_in_speed, u_int32_t speed,int32_t* pos);
     bool WriteVarPosition(u_int16_t index, std::vector<int32_t> pos);
-    bool FileTransmitCommand(char name[]);
-    bool FileReceiveCommand(char name[]);
-    bool FileDeleteCommand(char name[]);
+    bool FileTransmitCommand(char name[],int length);
+    bool FileReceiveCommand(char name[],int length);
+    bool FileDeleteCommand(char name[],int length);
     bool GetJobFile(QString path);
     bool JobFile2ByteArray(QString path);
     bool ConnectToPLC(QHostAddress host, u_int port,uint16_t adr,uint16_t no_reg,std::vector<uint16_t> data);
@@ -69,12 +69,15 @@ public:
     void ReceiveData();
     QByteArray* rx_file_buffer;
     QByteArray* tx_file_buffer;
-
+Q_SIGNAL
+    void receiveAllData();
+Q_SIGNAL
+    void transferAllData();
 private:
     QHostAddress _HostAddress;
     quint16 _port;
     QByteArray* rx_buffer;
-
+    u_int32_t previous;
     u_int32_t index_file_transmit;
     u_int32_t max_index_file_transmit;
     u_int32_t last_byte_number;
