@@ -1,5 +1,6 @@
 #include "../include/motorosudp/capture.h"
 #include <QDebug>
+#include<time.h>
 
 Capture::Capture(QObject *parent)
     :QThread { parent }
@@ -161,9 +162,9 @@ void Tranfer_CorRobot(float x_cam, float y_cam, float z_cam,
     //Tranfer Matrix
     float A[4][4] =
       {
-        { 0.0349, 0.999, 0,  239 },
+        { 0.0349, 0.999, 0,  238 },
         { 0.999, -0.034, 0, -303 },
-        {     0,     0, -1, 145.5},
+        {     0,     0, -1, 145.7},
         {     0,     0,  0,    1 },
       };
      // Position of Object in Camera Coordinate
@@ -274,7 +275,7 @@ void Capture::detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::
     //Calculate Rx, Ry, Rz
     Rx = 180;
     Ry = 0;
-    Rz = 90 -theta -25;
+    Rz =theta;
     //between the top-left and top-right coordinates, followed by
     //the midpoint between bottom-left and bottom-right coordinates
     cv::Point2f tltr =  (cv::Point2f(boxPts.at<float>(2,0),boxPts.at<float>(2,1))+
@@ -312,7 +313,7 @@ void Capture::detectOject_findContour(cv::Mat m_Frame, cv::Mat Frame_Draw, std::
 
     Tranfer_CorRobot(x_cam*1000, y_cam*1000, z_cam*1000, x_robot,y_robot,z_robot);
     //Set signal for Robot
-    if(y_robot >= -230) {
+    if(y_robot >= -255) {
       bool temp = 1;
       if(temp!=Found_Object_Mid)
         Q_EMIT foundObject();
@@ -364,6 +365,8 @@ void Capture::run()
 
         while (true)
         {
+            //std::cout << double(clock()-time)/CLOCKS_PER_SEC << std::endl;
+            time = clock();
 
             rs2::frameset data = pipe.wait_for_frames(); // Wait for next set of frames from the camera
 
@@ -424,7 +427,18 @@ void Capture::run()
                 detectOject_findContour(mFrame_Color,Frame_Draw, blobs, ChooseOBject,depth_frame,Mearsure_Ready,
                                         x_robot, y_robot, z_robot, Found_Object, Found_Object_Mid, Rx, Ry, Rz);
 
-
+                //Calculate z_robot
+                /*if (blobs.empty()) {cnt = 0 ;sum = 0 ;z_robot_now = 0 ; z_robot_1 = 0 ; z_robot_2 = 0 ; z_robot_3 = 0;}
+                else
+                {
+                  //cnt++;
+                  //sum += z_robot_now;
+                  //z_robot = sum/cnt;
+                  z_robot = 0.8*z_robot_now + 0.1*z_robot_1 + 0.05*z_robot_2 + 0.05*z_robot_3;
+                  z_robot_3 = z_robot_2;
+                  z_robot_2 = z_robot_1;
+                  z_robot_1 = z_robot;
+                }*/
 
             }
             if (!mFrame_Color.empty() && !mFrame_Depth.empty())

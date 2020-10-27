@@ -382,7 +382,7 @@ void MotoUDP::MotoUDP::ReceiveData()
     rx_buffer->resize(client->pendingDatagramSize());
     client->readDatagram(rx_buffer->data(),rx_buffer->size());
 
-    qDebug() << rx_buffer->toHex();
+   // qDebug() << rx_buffer->toHex();
     if(GetReceiveType() == GET_POSITION && rx_buffer->at(26)==0)
     {
       memcpy(current_position,rx_buffer->data()+52,24);
@@ -390,15 +390,19 @@ void MotoUDP::MotoUDP::ReceiveData()
     else if (GetReceiveType() == GET_PULSE && rx_buffer->at(26)==0) {
       memcpy(current_pulse,rx_buffer->data()+52,24);
     }
-    else if (GetReceiveType() == FILE_RECEIVE && rx_buffer->at(26)==0) {
+    else if (GetReceiveType() == FILE_RECEIVE ) {
+
        TxData header;
-       memcpy(&header,rx_buffer,32);
+       memcpy(&header,rx_buffer->data(),32);
       for (int i = 32;i<rx_buffer->size();i++) {
         rx_file_buffer->push_back(rx_buffer->at(i));
-//        qDebug() << rx_buffer->toHex();
+        qDebug() << rx_buffer->toHex();
       }
       if(header.block_no-previous!=1){
         Q_EMIT receiveAllData();
+      }
+      if(rx_buffer->at(26)!=0){
+        Q_EMIT receiveError();
       }
       previous=header.block_no;
       header.command_no = 0;
@@ -408,11 +412,20 @@ void MotoUDP::MotoUDP::ReceiveData()
       header.data_size = 0;
       char data[32];
       memcpy(data,&header,32);
+//      for (int i=0;i<32;i++) {
+//        qDebug() << (uint8_t) data[i];
+//      };
       client->writeDatagram(data,32,_HostAddress,_port+1);
     }
-    else if (GetReceiveType() == FILE_TRANSMIT&& rx_buffer->at(26)==0) {
-      if(last_data==true)
+    else if (GetReceiveType() == FILE_TRANSMIT) {
+      qDebug() << rx_buffer->toHex();
+      if(last_data==true&&rx_buffer->at(26)==0)
       {
+        Q_EMIT transferAllData();
+        return;
+      }
+      if(rx_buffer->at(26)!=0){
+        Q_EMIT transferError();
         return;
       }
       index_file_transmit++;
@@ -432,7 +445,7 @@ void MotoUDP::MotoUDP::ReceiveData()
         byte_number = last_byte_number;
         header.block_no = index_file_transmit+0x80000000;
         last_data = true;
-        Q_EMIT transferAllData();
+
       }
       header.data_size = byte_number;
       memcpy(data,&header,32);
@@ -443,6 +456,9 @@ void MotoUDP::MotoUDP::ReceiveData()
 //      }
 
       client->writeDatagram(data,32+byte_number,_HostAddress,_port+1);
+    }
+    else if (GetReceiveType() == FILE_DELETE ) {
+    qDebug() << rx_buffer->toHex();
     }
 
     //rx_data = ByteArray2Hex(*rx_buffer);
@@ -495,7 +511,7 @@ bool MotoUDP::MotoUDP::FileDeleteCommand(char name[],int length){
   sent_data.instance = 0;
   sent_data.attribute = 0;
   sent_data.service = 0x9;
-  sent_data.data_size = 13;//
+  sent_data.data_size = length;//
   char buffer[32+length];//
   memcpy(buffer,&sent_data,sizeof (sent_data));
   memcpy(buffer+sizeof(sent_data),name,length);//

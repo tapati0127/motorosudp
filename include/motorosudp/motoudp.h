@@ -73,6 +73,10 @@ Q_SIGNAL
     void receiveAllData();
 Q_SIGNAL
     void transferAllData();
+Q_SIGNAL
+   void receiveError();
+Q_SIGNAL
+   void transferError();
 private:
     QHostAddress _HostAddress;
     quint16 _port;

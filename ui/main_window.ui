@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
-    <height>1013</height>
+    <width>1042</width>
+    <height>1017</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -305,8 +305,7 @@ QGroupBox::title {
                 <bool>false</bool>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>Status: OFF</string>
@@ -715,7 +714,7 @@ QGroupBox::title {
             <property name="title">
              <string>Teaching Points</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_8">
+            <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_24">
                <item>
@@ -738,9 +737,9 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="pushButtonModifyPoint">
+                  <widget class="QPushButton" name="pushButtonCheck">
                    <property name="text">
-                    <string>MODIFY</string>
+                    <string>CHECK</string>
                    </property>
                   </widget>
                  </item>
@@ -780,13 +779,9 @@ QGroupBox::title {
             <property name="title">
              <string>JOB</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_10">
+            <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_16">
-               <item>
-                <widget class="QPlainTextEdit" name="plainTextEditJOB"/>
-               </item>
-              </layout>
+              <widget class="QTextEdit" name="textEditJOB"/>
              </item>
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_27">
@@ -813,30 +808,34 @@ QGroupBox::title {
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_28">
+              <layout class="QHBoxLayout" name="horizontalLayout_23">
                <item>
-                <widget class="QPushButton" name="pushButtonGetJobFile">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>GET JOB FILE</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_18">
-                 <property name="text">
-                  <string>Name:</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEditName">
-                 <property name="text">
-                  <string>TPT3.JBI</string>
-                 </property>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_21">
+                 <item>
+                  <widget class="QPushButton" name="pushButtonGetJobFile">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>GET JOB FILE</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Name:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEditName">
+                   <property name="text">
+                    <string>TPT3.JBI</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
                <item>
                 <widget class="QPushButton" name="pushButtonOpenJOB">
@@ -872,151 +871,6 @@ QGroupBox::title {
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
-       <widget class="QPushButton" name="pushButton_10">
-        <property name="geometry">
-         <rect>
-          <x>420</x>
-          <y>310</y>
-          <width>118</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>INIT</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_8">
-        <property name="geometry">
-         <rect>
-          <x>810</x>
-          <y>260</y>
-          <width>118</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>PLC</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_9">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>310</y>
-          <width>311</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>START SEND POSITION</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_11">
-        <property name="geometry">
-         <rect>
-          <x>550</x>
-          <y>310</y>
-          <width>118</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>STOP</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>110</y>
-          <width>118</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>MARKER</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="geometry">
-         <rect>
-          <x>330</x>
-          <y>160</y>
-          <width>113</width>
-          <height>31</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_7">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>211</y>
-          <width>81</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>DELETE</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>88</y>
-          <width>130</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Get File COm</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>129</y>
-          <width>94</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Make file</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>252</y>
-          <width>93</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Send File</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_6">
-        <property name="geometry">
-         <rect>
-          <x>590</x>
-          <y>170</y>
-          <width>80</width>
-          <height>33</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Get File</string>
-        </property>
-       </widget>
-      </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
         <string>Conveyor Tracking</string>
@@ -1040,66 +894,62 @@ QGroupBox::title {
           <property name="title">
            <string>CAMERA</string>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
+            <widget class="QPushButton" name="CameraOn_Button">
+             <property name="text">
+              <string>Camera On</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="CameraOff_Button">
+             <property name="text">
+              <string>Camera Off</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="StreamOption_comboBox">
              <item>
-              <widget class="QPushButton" name="CameraOn_Button">
-               <property name="text">
-                <string>Camera On</string>
-               </property>
-              </widget>
+              <property name="text">
+               <string>Color Stream</string>
+              </property>
              </item>
              <item>
-              <widget class="QPushButton" name="CameraOff_Button">
-               <property name="text">
-                <string>Camera Off</string>
-               </property>
-              </widget>
+              <property name="text">
+               <string>Depth Stream</string>
+              </property>
              </item>
-             <item>
-              <widget class="QComboBox" name="StreamOption_comboBox">
-               <item>
-                <property name="text">
-                 <string>Color Stream</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Depth Stream</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Background_Button">
-               <property name="text">
-                <string>Background</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Mask_Button">
-               <property name="text">
-                <string>Select Mask</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="ChooseObject_Button">
-               <property name="text">
-                <string>ChooseObject</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="Size_Button">
-               <property name="text">
-                <string>Mearsure</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Background_Button">
+             <property name="text">
+              <string>Background</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Mask_Button">
+             <property name="text">
+              <string>Select Mask</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="ChooseObject_Button">
+             <property name="text">
+              <string>ChooseObject</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="Size_Button">
+             <property name="text">
+              <string>Mearsure</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -1115,14 +965,7 @@ QGroupBox::title {
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-</string>
+             <string notr="true"/>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>
@@ -1160,42 +1003,11 @@ QGroupBox::title {
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_38">
-                 <item>
-                  <widget class="QLabel" name="label_11">
-                   <property name="text">
-                    <string>Trigger Position:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QSpinBox" name="spinBoxEncoderType_2">
-                   <property name="minimum">
-                    <number>-200000</number>
-                   </property>
-                   <property name="maximum">
-                    <number>200000</number>
-                   </property>
-                   <property name="value">
-                    <number>-80000</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_15">
-                   <property name="text">
-                    <string>um</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_39">
                  <item>
                   <widget class="QLabel" name="label_17">
                    <property name="text">
-                    <string>Start Tracking:</string>
+                    <string>Start Tracking P:</string>
                    </property>
                   </widget>
                  </item>
@@ -1208,7 +1020,7 @@ QGroupBox::title {
                     <number>200000</number>
                    </property>
                    <property name="value">
-                    <number>-70000</number>
+                    <number>-140000</number>
                    </property>
                   </widget>
                  </item>
@@ -1226,7 +1038,7 @@ QGroupBox::title {
                  <item>
                   <widget class="QLabel" name="label_21">
                    <property name="text">
-                    <string>Stop Tracking:</string>
+                    <string>Stop Tracking P:</string>
                    </property>
                   </widget>
                  </item>
@@ -1239,7 +1051,7 @@ QGroupBox::title {
                     <number>200000</number>
                    </property>
                    <property name="value">
-                    <number>90000</number>
+                    <number>80000</number>
                    </property>
                   </widget>
                  </item>
@@ -1270,7 +1082,7 @@ QGroupBox::title {
                     <number>100000</number>
                    </property>
                    <property name="value">
-                    <number>13000</number>
+                    <number>25000</number>
                    </property>
                   </widget>
                  </item>
@@ -1298,15 +1110,46 @@ QGroupBox::title {
                     <number>0</number>
                    </property>
                    <property name="maximum">
-                    <number>10000</number>
+                    <number>30000</number>
                    </property>
                    <property name="value">
-                    <number>5000</number>
+                    <number>8000</number>
                    </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QLabel" name="label_32">
+                   <property name="text">
+                    <string>um</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_38">
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>Picking Height:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="spinBoxEncoderPickingHeight">
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>100000</number>
+                   </property>
+                   <property name="value">
+                    <number>7500</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_15">
                    <property name="text">
                     <string>um</string>
                    </property>
@@ -1335,7 +1178,7 @@ QGroupBox::title {
               <property name="title">
                <string>MEASUREMENT</string>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_13">
+              <layout class="QVBoxLayout" name="verticalLayout_15">
                <item>
                 <widget class="QPushButton" name="pushButtonConnectSerial">
                  <property name="text">
@@ -1346,10 +1189,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="labelSerialStatus">
                  <property name="styleSheet">
-                  <string notr="true">border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.3em;
-margin-bottom: 0.3em;</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string>Not connected yet</string>
@@ -1360,74 +1200,91 @@ margin-bottom: 0.3em;</string>
                 </widget>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_17">
+                <layout class="QHBoxLayout" name="horizontalLayout_36">
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_36">
-                   <item>
-                    <widget class="QLabel" name="label_8">
-                     <property name="text">
-                      <string>Encoder:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QSpinBox" name="spinBoxEncoderType">
-                     <property name="minimum">
-                      <number>100</number>
-                     </property>
-                     <property name="maximum">
-                      <number>2000</number>
-                     </property>
-                     <property name="value">
-                      <number>400</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_9">
-                     <property name="text">
-                      <string>pulse/ round</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QLabel" name="label_8">
+                   <property name="text">
+                    <string>Encoder:</string>
+                   </property>
+                  </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_37">
-                   <item>
-                    <widget class="QLabel" name="label_12">
-                     <property name="text">
-                      <string>Ratio:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="doubleSpinBoxRatio">
-                     <property name="decimals">
-                      <number>1</number>
-                     </property>
-                     <property name="minimum">
-                      <double>10.000000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>100000.000000000000000</double>
-                     </property>
-                     <property name="singleStep">
-                      <double>0.010000000000000</double>
-                     </property>
-                     <property name="value">
-                      <double>100.000000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_3">
-                     <property name="text">
-                      <string>mm/ round</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QSpinBox" name="spinBoxEncoderType">
+                   <property name="minimum">
+                    <number>100</number>
+                   </property>
+                   <property name="maximum">
+                    <number>2000</number>
+                   </property>
+                   <property name="value">
+                    <number>400</number>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_9">
+                   <property name="text">
+                    <string>pulse/ round</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_37">
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>Ratio:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="doubleSpinBoxRatio">
+                   <property name="decimals">
+                    <number>1</number>
+                   </property>
+                   <property name="minimum">
+                    <double>10.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>100000.000000000000000</double>
+                   </property>
+                   <property name="singleStep">
+                    <double>0.010000000000000</double>
+                   </property>
+                   <property name="value">
+                    <double>100.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_3">
+                   <property name="text">
+                    <string>mm/ round</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_44">
+                 <item>
+                  <widget class="QLabel" name="label_23">
+                   <property name="text">
+                    <string>Speed:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEditSpeed"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_26">
+                   <property name="text">
+                    <string>mm/ s</string>
+                   </property>
+                  </widget>
                  </item>
                 </layout>
                </item>
@@ -1556,145 +1413,170 @@ QGroupBox::title {
             <property name="title">
              <string>OBJECT POSITIONS</string>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_23">
+            <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_14">
+              <layout class="QHBoxLayout" name="horizontalLayout_20">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_35">
+                  <layout class="QHBoxLayout" name="horizontalLayout_6">
                    <item>
-                    <widget class="QLabel" name="label_33">
-                     <property name="text">
-                      <string>X</string>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_35">
+                     <item>
+                      <widget class="QLabel" name="label_33">
+                       <property name="text">
+                        <string>X</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditX_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                    <item>
-                    <widget class="QLineEdit" name="lineEditX_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
+                    <layout class="QHBoxLayout" name="horizontalLayout_47">
+                     <item>
+                      <widget class="QLabel" name="label_36">
+                       <property name="text">
+                        <string>Y</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditY_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_49">
+                     <item>
+                      <widget class="QLabel" name="label_39">
+                       <property name="text">
+                        <string>Z</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditZ_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_47">
-                   <item>
-                    <widget class="QLabel" name="label_36">
-                     <property name="text">
-                      <string>Y</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEditY_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_49">
-                   <item>
-                    <widget class="QLabel" name="label_39">
-                     <property name="text">
-                      <string>Z</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEditZ_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QSplitter" name="splitter_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <widget class="QWidget" name="layoutWidget">
+                    <layout class="QHBoxLayout" name="horizontalLayout_51">
+                     <item>
+                      <widget class="QLabel" name="label_40">
+                       <property name="text">
+                        <string>RX</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditRX_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="layoutWidget">
+                    <layout class="QHBoxLayout" name="horizontalLayout_53">
+                     <item>
+                      <widget class="QLabel" name="label_42">
+                       <property name="text">
+                        <string>RZ</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditRZ_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                   <widget class="QWidget" name="layoutWidget">
+                    <layout class="QHBoxLayout" name="horizontalLayout_52">
+                     <item>
+                      <widget class="QLabel" name="label_41">
+                       <property name="text">
+                        <string>RY</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLineEdit" name="lineEditRY_3">
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                       <property name="readOnly">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </widget>
                  </item>
                 </layout>
                </item>
                <item>
-                <widget class="QSplitter" name="splitter_8">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <widget class="QWidget" name="layoutWidget">
-                  <layout class="QHBoxLayout" name="horizontalLayout_51">
-                   <item>
-                    <widget class="QLabel" name="label_40">
-                     <property name="text">
-                      <string>RX</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEditRX_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="layoutWidget">
-                  <layout class="QHBoxLayout" name="horizontalLayout_53">
-                   <item>
-                    <widget class="QLabel" name="label_42">
-                     <property name="text">
-                      <string>RZ</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEditRZ_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                 <widget class="QWidget" name="layoutWidget">
-                  <layout class="QHBoxLayout" name="horizontalLayout_52">
-                   <item>
-                    <widget class="QLabel" name="label_41">
-                     <property name="text">
-                      <string>RY</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="lineEditRY_3">
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="readOnly">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </widget>
+                <layout class="QHBoxLayout" name="horizontalLayout_46">
+                 <item>
+                  <widget class="QLabel" name="label_44">
+                   <property name="text">
+                    <string>Distance:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEditDistance"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_45">
+                   <property name="text">
+                    <string>um</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </item>
               </layout>
              </item>
@@ -1804,7 +1686,7 @@ QGroupBox::title {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1041</width>
+     <width>1042</width>
      <height>28</height>
     </rect>
    </property>

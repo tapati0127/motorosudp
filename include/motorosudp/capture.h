@@ -30,7 +30,7 @@ public:
     size_t ChooseOBject;
     QImage BackgroundImage;
     cv::Point MaskTLPoint, MaskBRPoint = cv::Point(0,0);
-    float x_robot, y_robot, z_robot, Rx, Ry, Rz;
+    float x_robot, y_robot, z_robot, Rx, Ry, Rz = 0;
     bool Found_Object, Found_Object_Mid = 0;
 
 
@@ -51,6 +51,10 @@ private:
     // Declare depth colorizer for pretty visualization of depth data
     rs2::colorizer color_map;
     rs2::config cfg;
+    float z_robot_now, z_robot_1, z_robot_2, z_robot_3 = 0;
+    int cnt;
+    double sum;
+    int time;
 
 
 };

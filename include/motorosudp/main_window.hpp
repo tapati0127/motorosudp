@@ -66,10 +66,12 @@ public:
  // double current_position[6];
   std::vector <double> current_joints_radian;
   std::vector <int> current_object_position;
+  std::vector<std::vector <int>> object_position;
   std::vector <int> current_positions_int;
   std::vector <double> current_positions;
   std::vector <double> pre_current_joints_radian;
-  double distance;
+  double speed;
+  int distance;
   //int32_t current_pulse[6];
   void GetPositionandMove(u_int16_t type, u_int32_t class_speed);
   void DefaultRealControl();
@@ -87,28 +89,20 @@ public Q_SLOTS:
   void foundObject();
   void fileReceiveDone();
   void fileTransmitDone();
+  void fileReceiveError();
+  void fileTransmitError();
   void deleteFile();
   void on_comboBoxCoordinate_currentIndexChanged(int index);
-  void on_checkBoxDrawEndPoints_stateChanged(int arg1);
 
 
 
-  void on_pushButton_clicked();
+
+
   void sendDataPosition();
   //void on_pushButtonAdd_1_clicked(bool checked);
-  void on_pushButton_3_clicked();
-  void on_pushButton_4_clicked();
-  void on_pushButton_6_clicked();
-  void on_pushButton_5_clicked();
-  void on_pushButton_7_clicked();
-  void on_pushButton_8_clicked();
-  void on_pushButton_9_clicked();
-  void on_pushButton_10_clicked();
-  void on_pushButton_11_clicked();
   void on_pushButtonAddPoint_clicked();
   void on_pushButtonRemovePoint_clicked();
-  void on_pushButtonCheckPoint_clicked();
-  void on_pushButtonModifyPoint_clicked();
+//  void on_pushButtonModifyPoint_clicked();
   void on_CameraOff_Button_clicked();
   void on_CameraOn_Button_clicked();
   void on_StreamOption_comboBox_currentIndexChanged(const QString &arg1);
@@ -119,9 +113,7 @@ public Q_SLOTS:
   void handleButton() ;
   void on_pushButtonConnectSerial_clicked();
   void on_comboBox_currentIndexChanged(int index);
-  void on_pushButton_2_clicked();
   void on_pushButtonStartConveyer_clicked();
-  void on_pushButton_12_clicked();
   void on_radioButtonInteractiveMarker_clicked(bool checked);
   void on_pushButtonHoming_clicked();
   void on_pushButtonServoHoming_clicked();
@@ -132,6 +124,9 @@ public Q_SLOTS:
   void on_pushButtonSendJOB_clicked();
   void on_pushButtonServo_clicked();
   void on_checkBoxTrajectory_stateChanged(int arg1);
+  void on_pushButtonStartMasterJOB_clicked();
+  void on_pushButtonGeneratePath_clicked();
+  void on_pushButtonCheck_clicked();
 
 private:
   Ui::MainWindowDesign* ui;
